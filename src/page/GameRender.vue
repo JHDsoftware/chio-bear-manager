@@ -1,100 +1,140 @@
 <template>
-  <v-container fluid class="fill-height">
-    <div>
-      <div class="d-flex justify-space-between">
-        <h1>Game Map</h1>
-        <h1>Loop: 15</h1>
-      </div>
-      <div style="background: #f6f6f6">
-        <div style="display: grid;
-    grid-template-columns:repeat(16,24px);
-    grid-gap: 2px;
-     grid-template-rows: repeat(16,24px);
-   ">
-          <template v-for="i in mapSizeX*mapSizeY">
-            <v-card
-                elevation="0"
-                tile
-                :color="isActive(mapInfo[i-1])?'white':'transparent'"
-                :key="i"
-                style="width: 100%;height: 100%;margin: 4px;overflow: visible"
-                :style="getSlotMarginString(mapInfo[i - 1])"
-            >
-              <template v-if="mapInfo[i-1]">
-                <template v-if="hasMan(i)">
-                  <v-card color="warning" style="z-index: 100">
-                    <v-icon>mdi-hard-hat</v-icon>
-                  </v-card>
-                </template>
-                <template v-else-if="content(mapInfo[i-1].count)==='barrier'">
-                  <div>
-                    <v-icon>mdi-sign-caution</v-icon>
-                  </div>
-                </template>
-              </template>
-
-            </v-card>
-          </template>
-
-        </div>
-      </div>
-
-      <div style="display: grid;grid-template-columns: repeat(2,1fr)">
-
-        <div class="pa-2">
-          <h2>Horse Status</h2>
-          <div>Stima
-            <v-progress-linear color="warning" height="20"
-                               buffer-value="43"
-                               stream></v-progress-linear>
-          </div>
-          <div>Bravery
-            <v-progress-linear color="error" height="20"
-                               buffer-value="22"
-                               stream></v-progress-linear>
-          </div>
-          <v-btn class="mt-2" color="primary" block>Start Game</v-btn>
-        </div>
-        <div class="pa-2">
-          <h2>Leaderboard</h2>
-          <v-card dark class=" d-flex pa-2">
-            <div>Ongoing Aaden</div>
-            <v-spacer></v-spacer>
-            <v-icon color="white">mdi-hard-hat</v-icon>
-          </v-card>
-          <v-card elevation="0" outlined tile class=" d-flex pa-2">
-            <div>1. Falcon</div>
-            <v-spacer></v-spacer>
-            <v-icon>mdi-numeric-1</v-icon>
-          </v-card>
-          <v-card elevation="0" outlined tile class=" d-flex pa-2">
-            <div>2. Falcon</div>
-            <v-spacer></v-spacer>
-            <v-icon>mdi-numeric-1</v-icon>
-          </v-card>
-          <v-card elevation="0" outlined tile class=" d-flex pa-2">
-            <div>3. Falcon</div>
-            <v-spacer></v-spacer>
-            <v-icon>mdi-numeric-1</v-icon>
-          </v-card>
-          <v-card elevation="0" outlined tile class=" d-flex pa-2">
-            <div>4. Falcon</div>
-            <v-spacer></v-spacer>
-            <v-icon>mdi-numeric-1</v-icon>
-          </v-card>
-          <v-card elevation="0" outlined tile class=" d-flex pa-2">
-            <div>5. Falcon</div>
-            <v-spacer></v-spacer>
-            <v-icon>mdi-numeric-1</v-icon>
-          </v-card>
-        </div>
-
-      </div>
-
-
+  <v-container fluid style="height: 100%"
+               class="d-flex flex-column justify-space-between">
+    <div class="d-flex justify-space-between">
+      <h1>Game Map</h1>
     </div>
+    <v-card v-if="gameIsStart" dark class="pa-2">
+      <h4>CHIO Flow</h4>
+      <span style="font-weight: 300">{{ flatText }}</span>
+    </v-card>
+    <div class="mt-2" style="background: #f6f6f6">
+      <div class="pa-2" style="display: grid;
+    grid-template-columns:repeat(12,24px);
+     grid-template-rows: repeat(12,24px);
+   ">
+        <template v-for="i in mapSizeX*mapSizeY">
+          <v-card
+              elevation="0"
+              tile
+              :color="isActive(mapInfo[i-1])?'white':'transparent'"
+              :key="i"
+              style="width: 100%;height: 100%;margin: 4px;overflow: visible"
+              :style="getSlotMarginString(mapInfo[i - 1])"
+          >
+            <template v-if="mapInfo[i-1]">
+              <template v-if="hasMan(i)">
+                <v-card color="warning" style="z-index: 100">
+                  <v-icon>mdi-hard-hat</v-icon>
+                </v-card>
+              </template>
+              <template v-else-if="content(mapInfo[i-1].count)==='barrier'">
+                <div>
+                  <v-icon>mdi-sign-caution</v-icon>
+                </div>
+              </template>
+            </template>
 
+          </v-card>
+        </template>
+      </div>
+    </div>
+    <template v-if="gameIsStart">
 
+      <div
+          class="flex-grow-1"
+          style="display: grid;
+        grid-template-columns: repeat(2,1fr)"
+      >
+        <div class="pa-2">
+          <template>
+            <h2>Horse Status</h2>
+            <div>Stima
+              <v-progress-linear color="warning" height="20"
+                                 :buffer-value="horseStima"
+                                 stream></v-progress-linear>
+            </div>
+            <div>Bravery
+              <v-progress-linear color="error" height="20"
+                                 :buffer-value="horseCourage"
+                                 stream></v-progress-linear>
+            </div>
+          </template>
+          <v-btn @click="()=>gameIsStart=false"
+                 block class="mt-2"
+                 color="warning">Pause Game
+          </v-btn>
+        </div>
+        <div class="pa-2">
+          <v-card class="pa-2">
+            <div class="">
+              <span class="caption">SCORE</span>
+            </div>
+            <div style="width: 100%;text-align: right">
+              <h1>0</h1>
+            </div>
+          </v-card>
+          <v-card class="pa-2">
+            <div class="">
+              <span class="caption">Bariers</span>
+            </div>
+            <div style="width: 100%;text-align: right">
+              <h1>0/10</h1>
+            </div>
+          </v-card>
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="pa-2">
+        <h1>Leaderboard</h1>
+        <v-card dark class=" d-flex pa-2">
+          <div>Ongoing Aaden</div>
+          <v-spacer></v-spacer>
+          <v-icon color="white">mdi-hard-hat</v-icon>
+        </v-card>
+        <v-card elevation="0" outlined tile class=" d-flex pa-2">
+          <div>1. Falcon</div>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-numeric-1</v-icon>
+        </v-card>
+        <v-card elevation="0" outlined tile class=" d-flex pa-2">
+          <div>2. Falcon</div>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-numeric-1</v-icon>
+        </v-card>
+        <v-card elevation="0" outlined tile class=" d-flex pa-2">
+          <div>3. Falcon</div>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-numeric-1</v-icon>
+        </v-card>
+        <v-card elevation="0" outlined tile class=" d-flex pa-2">
+          <div>4. Falcon</div>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-numeric-1</v-icon>
+        </v-card>
+        <v-card elevation="0" outlined tile class=" d-flex pa-2">
+          <div>5. Falcon</div>
+          <v-spacer></v-spacer>
+          <v-icon>mdi-numeric-1</v-icon>
+        </v-card>
+      </div>
+      <div class="pa-2 mt-2">
+        <h2>Next Horse</h2>
+        <v-card>
+          <v-list-item>
+            <v-list-item-content>
+              <v-list-item-title>Aaden</v-list-item-title>
+              <v-list-item-subtitle>170cm/450kg</v-list-item-subtitle>
+            </v-list-item-content>
+          </v-list-item>
+        </v-card>
+      </div>
+      <div class="pa-2">
+        <v-btn @click="gameStart" class="mt-2" color="primary" block>Start Game</v-btn>
+      </div>
+    </template>
+    <v-spacer></v-spacer>
   </v-container>
 
 </template>
@@ -107,10 +147,14 @@ export default {
   name: "GameRender",
   data: function () {
     return {
-      mapSizeX: 16,
-      horseList:["Aaden","Rabbit","Amy",""],
-      mapSizeY: 16,
+      mapSizeX: 12,
+      horseList: ["Aaden", "Rabbit", "Amy", ""],
+      flatText: "He move fast, goes through the flat land!.",
+      mapSizeY: 12,
       currentManIndex: 1,
+      horseStima: 30,
+      horseCourage: 30,
+      gameIsStart: false,
       path: [],
       mapInfo: {}
     };
@@ -203,7 +247,7 @@ export default {
       } else if (a.x - b.x === -1) {
         return 'margin-right:0;'
       } else if (a.y - b.y === 1) {
-        return 'margin-right:0;'
+        return 'margin-top:0;'
       } else {
         return 'margin-bottom:0;'
       }
@@ -240,19 +284,47 @@ export default {
       }
 
     },
-
+    shouldEndGame() {
+      return (this.currentManIndex >= this.path.length)
+          || this.horseCourage <= 0 ||
+          this.horseStima <= 0 || !this.gameIsStart
+    },
     gameLoop() {
-      this.moveManToNextSlot()
+      const currentSlot = this.path[this.currentManIndex]
+      if (currentSlot.content.type === 'barrier') {
+        this.horseCourage -= getRandomInt(20)
+        this.horseStima -= getRandomInt(10)
+        if (this.horseCourage > 30) {
+          this.moveManToNextSlot()
+        } else {
+          this.horseStima += getRandomInt(30)
+          this.horseCourage += getRandomInt(30)
+          this.flatText = "He is Waiting for the chance!"
+        }
+      } else {
+        this.flatText = "He move fast," +
+            " goes through the flat land!."
+        this.horseStima += getRandomInt(3)
+        this.horseCourage += getRandomInt(3)
+        this.moveManToNextSlot()
+      }
+
+      if (!this.shouldEndGame()) {
+        setTimeout(this.gameLoop, 1000)
+      } else {
+        this.flatText = "He is ending the game"
+      }
     },
     moveManToNextSlot() {
       this.currentManIndex++
     },
     gameStart() {
-      setInterval(this.moveManToNextSlot, 1000)
+      this.gameIsStart = true
+      this.gameLoop()
     }
   },
   mounted() {
-    while (this.generateMap() < 90) {
+    while (this.generateMap() < 60) {
       this.path = []
       this.mapInfo = {}
     }
