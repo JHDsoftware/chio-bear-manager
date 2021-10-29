@@ -99,6 +99,10 @@
                                     <v-img src="../assets/jumping.png"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
+                                    <v-text-field
+                                            label="Give it an name!"
+                                            v-model = horseModel.name
+                                    ></v-text-field>
                                     <div class="text-h5 mb-1">
                                         {{horseModel.pedigree}}
                                     </div>
@@ -225,6 +229,7 @@
                 ],
                 horseModel:{
                     avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
+                    name: "",
                     pedigreeId: 0, //种族
                     pedigree: "", //种族
                     pedigreeCharacterIds: [], //特性列表
@@ -314,6 +319,7 @@
         },
         methods: {
             saveHorse() {
+
                 myHorseList.push(this.horseModel)
                 console.log(myHorseList)
                 this.findHorseDialog = false
