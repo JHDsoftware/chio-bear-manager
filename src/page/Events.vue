@@ -1,17 +1,5 @@
 <template>
     <v-container fluid class="fill-height">
-        <v-app-bar
-                app
-                dark
-                color="blue">
-            <v-toolbar-title>
-                Event List
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <span>CHIO Aachen CAMPUS</span>
-            <!--      <v-spacer></v-spacer>-->
-            <!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
-        </v-app-bar>
         <v-card
                 class="mx-auto  mb-4"
                 max-width="344"

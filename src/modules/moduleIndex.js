@@ -2,6 +2,8 @@
 import IKUtils from "innerken-js-utils";
 import {getRandomInt} from "./randomUtils";
 
+export const myHorseList = []
+
 export const Horse = {
     name: "",
     pedigreeId: 0, //种族
@@ -39,10 +41,6 @@ export const Pedigree = {
     minCooperateAbility: 0,
 }
 
-export const PedigreeCharacter = {
-    id: 0,
-    name: ""
-}
 
 const cNew = function (proto, init = {}, dc = IKUtils.deepCopy) {
     return {
@@ -67,19 +65,19 @@ export const gameEndedEvent = cNew(GameEvent)
 const gameBeforeBlockEvent = cNew(GameEvent)
 const gameAfterBlockEvent = cNew(GameEvent)
 
-// 特性
-export const Character = {
-    id: 0,
-    name: null,
-    initBeforeStarted: null,
-}
-
-// 技能
-export const Skill = {
-    id: 0,
-    name: null,
-    initBeforeStarted: null,
-}
+// // 特性
+// const Character = {
+//     id: 0,
+//     name: null,
+//     initBeforeStarted: null,
+// }
+//
+// // 技能
+// const Skill = {
+//     id: 0,
+//     name: null,
+//     initBeforeStarted: null,
+// }
 
 const Buff = {
     id: 0,

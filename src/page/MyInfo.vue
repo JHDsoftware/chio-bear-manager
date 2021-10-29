@@ -1,15 +1,5 @@
 <template>
     <v-container fluid>
-        <v-app-bar
-                app
-                dark
-                color="blue">
-            <v-toolbar-title>
-                My
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <span>CHIO Aachen CAMPUS</span>
-        </v-app-bar>
         <v-row>
             <v-card width="1000" height="200px" color="black">
                     <v-card-title class="white--text mt-8">
@@ -113,7 +103,21 @@
                                         {{horseModel.pedigree}}
                                     </div>
                                     <v-list-item-title class="mb-1">
-                                        {{horseModel.pedigreeCharacterName}}
+                                        <v-card elevation="0">
+                                        <div class="pa-1">
+                                            <template v-for="(mod, t) in horseModel.pedigreeCharacterName.split(',')">
+                                                <v-chip
+                                                        label
+                                                        :key="t"
+                                                        color="primary"
+                                                        text-color="white"
+                                                        class="mr-1 mt-1"
+                                                >
+                                                    <span >{{ mod }}</span>
+                                                </v-chip>
+                                            </template>
+                                        </div>
+                                        </v-card>
                                     </v-list-item-title>
                                     <div>
                                         Courage:
@@ -145,6 +149,7 @@
                                     outlined
                                     rounded
                                     text
+                                    @click="saveHorse"
                             >
                                 Get
                             </v-btn>
@@ -205,6 +210,7 @@
 
 
     import {getRandomInt} from "../modules/randomUtils";
+    import {myHorseList} from "../modules/moduleIndex";
 
     export default {
         name: "MyInfo",
@@ -307,6 +313,9 @@
             }
         },
         methods: {
+            saveHorse() {
+                myHorseList.push(this.horseModel)
+            },
     findHorse () {
                 if(this.initChance > 0){
 

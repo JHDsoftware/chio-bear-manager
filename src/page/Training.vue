@@ -1,17 +1,5 @@
 <template>
     <v-container fluid>
-        <v-app-bar
-                app
-                dark
-                color="blue">
-            <v-toolbar-title>
-                Event List
-            </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <span>CHIO Aachen CAMPUS</span>
-            <!--      <v-spacer></v-spacer>-->
-            <!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
-        </v-app-bar>
         <v-row>
             <v-col
                     v-for="(item, n) in horsesList"
