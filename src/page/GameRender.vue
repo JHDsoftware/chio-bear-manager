@@ -22,6 +22,8 @@
 </template>
 
 <script>
+import {getRandomInt} from "@/modules/randomUtils";
+
 export default {
   name: "GameRender",
   data: function () {
@@ -39,7 +41,8 @@ export default {
       return [index%this.mapSizeX,index/this.mapSizeY]
     },
     getNextPossibleSlot(currentIndex = 0) {
-      
+      const direction=getRandomInt(7)
+      console.log(currentIndex,direction)
     }
   }
 }
