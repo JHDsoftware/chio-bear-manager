@@ -51,6 +51,16 @@
                       v-model="horse.curCourage"/>
                 </div>
 
+                <span style="margin-left: 48px; width: 150px">AccurateAbility:</span>
+                <div style="margin-left:48px; width: 80%">
+                  <v-progress-linear
+                      style="margin-right: 10px"
+                      height="10px"
+                      color="yellow"
+                      v-model="horse.curAccurateAbility"/>
+                </div>
+
+
                 <span style="margin-left: 48px; width: 150px">SpeedAbility:</span>
                 <div style="margin-left:48px; width: 80%">
                   <v-progress-linear
