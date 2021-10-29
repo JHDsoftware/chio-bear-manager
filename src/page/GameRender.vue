@@ -34,6 +34,11 @@
                 </div>
               </template>
             </template>
+            <template v-else>
+              <v-card color="success" elevation="0">
+                <v-icon>mdi-grass</v-icon>
+              </v-card>
+            </template>
 
           </v-card>
         </template>
@@ -71,7 +76,7 @@
               <span class="caption">SCORE</span>
             </div>
             <div style="width: 100%;text-align: right">
-              <h1>{{score}}</h1>
+              <h1>{{ score }}</h1>
             </div>
           </v-card>
           <v-card class="pa-2">
@@ -142,26 +147,34 @@
 <script>
 import {getRandomInt} from "@/modules/randomUtils";
 import {shuffle} from "lodash-es";
+import {blockLoop, EmptyBlock, Horse, VerticalBarrier} from "@/modules/moduleIndex";
 
 export default {
   name: "GameRender",
   data: function () {
     return {
       mapSizeX: 12,
+      horse: Object.assign({}, Horse, {curCourage: 100, curSportAbility: 100}),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",
       mapSizeY: 12,
       currentManIndex: 1,
-      speed: 1,
-      horseStima: 30,
-      horseCourage: 30,
-      score:0,
+      score: 0,
       gameIsStart: false,
       path: [],
       mapInfo: {}
     };
   },
   computed: {
+    speed() {
+      return 1 + (this.horse.curSpeedAbility / 100)
+    },
+    horseCourage() {
+      return this.horse.curCourage
+    },
+    horseStima() {
+      return this.horse.curSportAbility
+    },
     pathWithMan() {
       return this.path.map((d, i) => {
         d.hasMan = this.currentManIndex === i
@@ -293,35 +306,23 @@ export default {
     },
     gameLoop() {
       const currentSlot = this.path[this.currentManIndex]
-      if (currentSlot.content.type === 'barrier') {
-        this.horseCourage -= getRandomInt(20)
-        this.horseStima -= getRandomInt(10)
-        this.speed=1
-        if (this.horseCourage > 30) {
-          this.moveManToNextSlot()
-        } else {
-          this.horseStima += getRandomInt(30)
-          this.horseCourage += getRandomInt(30)
-          this.score-=2
-          this.flatText = "He is Waiting for the chance!"
-        }
-      } else {
-        this.flatText = "He move fast," +
-            " goes through the flat land!."
-        this.horseStima += getRandomInt(3)
-        this.horseCourage += getRandomInt(3)
+      const res = blockLoop(this.horse, currentSlot.block, this.currentManIndex)
+      console.log(res)
+      if (res <= 4) {
+        this.flatText = "He move fast, goes through the flat land!."
         this.moveManToNextSlot()
-        this.speed*=1.2
+      } else {
+        this.moveManToNextSlot(-1)
+        this.flatText = "He falls on the block! Get injury"
       }
-
       if (!this.shouldEndGame()) {
-        setTimeout(this.gameLoop, 1000/this.speed)
+        setTimeout(this.gameLoop, 1000 / this.speed)
       } else {
         this.flatText = "He is ending the game"
       }
     },
-    moveManToNextSlot(speed=1) {
-      this.currentManIndex+=speed
+    moveManToNextSlot(speed = 1) {
+      this.currentManIndex += speed
     },
     gameStart() {
       this.gameIsStart = true
@@ -335,10 +336,12 @@ export default {
     }
     this.path.forEach((d) => {
       if (getRandomInt(10) > 8) {
+        d.block = VerticalBarrier
         d.content = {
           type: "barrier"
         }
       } else {
+        d.block = EmptyBlock
         d.content = {
           type: "flat"
         }
