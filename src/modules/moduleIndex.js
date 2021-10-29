@@ -217,7 +217,7 @@ export const VerticalBarrier = cNew(Block, {
     }
 })
 
-const LargeVerticalBarrier = cNew(Block, {
+export const LargeVerticalBarrier = cNew(Block, {
     id: 11,
     name: "large vertical",
     beforePass: function (horse, block, loopCount, score) {
@@ -262,8 +262,8 @@ const LargeVerticalBarrier = cNew(Block, {
     }
 })
 
-const HealVertical = cNew(Block, {
-    id: 11,
+export const HealVertical = cNew(Block, {
+    id: 12,
     name: "heal vertical",
     beforePass: function (horse, block, loopCount, score) {
         return barrierCheck(horse, score,
