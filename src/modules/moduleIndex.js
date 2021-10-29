@@ -1,5 +1,6 @@
 //马的实体
 import IKUtils from "innerken-js-utils";
+import {getRandomInt} from "./randomUtils";
 
 const Horse = {
     name: "",
@@ -14,6 +15,7 @@ const Horse = {
     curAccurateAbility: 0,
     curSpeedAbility: 0,
     curCooperateAbility: 0,
+    curScore: 0,
     buffs: []
 }
 
@@ -98,19 +100,26 @@ const Buff = {
     }
 }
 
-const HpRegenerationBuff = cNew(Buff, {
-    id: 1,
-    duration: 2,
-    onApply: function (h) {
-        h.hp += 1000
-    },
-    onTick: function (h) {
-        h.hp += 100
-    },
-    onRemove: h => {
-        h.hp -= 1000
-    }
-})
+const localGetRandomInt = getRandomInt
+
+const PropertySimpleBuff = function (duration, modifier, revModifier) {
+    return cNew(Buff, {
+        id: 2,
+        duration: duration,
+        onApply: modifier,
+        onTick: () => {
+        },
+        onRemove: revModifier,
+    })
+}
+
+const LoopResult = {
+    INTERRUPTED: 1,
+    SUCCESS: 2,
+    GREAT_SUCCESS: 4,
+    FAILED: 8,
+    GREAT_FAILED: 16,
+}
 
 export const Block = {
     id: 0,
@@ -120,14 +129,95 @@ export const Block = {
     tryCount: 0,
 }
 
-const LoopResult = {
-    SUCCESS: 1,
-    GREAT_SUCCESS: 2,
-    FAILED: 4,
-    GREAT_FAILED: 8,
+export const EmptyBlock = cNew(Block, {
+    id: 10,
+    name: "empty",
+    beforePass: function () {
+        return LoopResult.SUCCESS
+    },
+    afterPass: function (h) {
+        h.curCourage += 2
+        h.curSportAbility += 2
+    },
+})
+
+const BASIC_SPORT_ABILITY_CONSUMPTION = 15
+const BASIC_COURAGE_CONSUMPTION = 15
+
+const barrierCheck = function (h, score, probCallback, effectCallback) {
+    const prob = probCallback(h)
+
+    const performance = localGetRandomInt(100)
+    const great = localGetRandomInt(100)
+    const branch = (performance < prob ? 0 : 2) + (great < 20 ? 1 : 0)
+    const selectedEff = [
+        effectCallback.success,
+        effectCallback.greatSuccess,
+        effectCallback.failed,
+        effectCallback.greatFailed,
+    ][branch]
+
+    const checkResult = [
+        LoopResult.SUCCESS,
+        LoopResult.GREAT_SUCCESS,
+        LoopResult.FAILED,
+        LoopResult.GREAT_FAILED,
+    ][branch]
+
+    selectedEff(h, score)
+
+    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
+    h.curCourage -= BASIC_COURAGE_CONSUMPTION
+
+    return checkResult
 }
 
-export const blockLoop = function (horse, block, loopCount, score, blockPassTime) {
+export const VerticalBarrier = cNew(Block, {
+    id: 11,
+    name: "vertical",
+    beforePass: function (horse, block, loopCount, score) {
+        return barrierCheck(horse, score,
+            h => 0.5 * (
+                h.curCourage +
+                h.curSportAbility +
+                h.curSpeedAbility +
+                h.curCooperateAbility +
+                h.curAccurateAbility
+            ) / 6,
+            {
+                success: () => {
+                },
+                greatSuccess: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 1.2,
+                        h => h.curSpeedAbility /= 1.2,
+                    ).applyToHorse(h)
+                },
+                failed: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 0.8,
+                        h => h.curSpeedAbility /= 0.8,
+                    ).applyToHorse(h)
+
+                    h.curScore -= 1
+                },
+                greatFailed: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 0.8,
+                        h => h.curSpeedAbility /= 0.8,
+                    ).applyToHorse(h)
+
+                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+
+                    h.curScore -= 1
+                },
+            },
+        )
+    }
+})
+
+export const blockLoop = function (horse, block, loopCount, score) {
     gameBeforeBlockEvent.callbacks.forEach(it => {
         it && it(horse, block, loopCount)
     })
@@ -139,14 +229,14 @@ export const blockLoop = function (horse, block, loopCount, score, blockPassTime
     horse.buffs = horse.buffs.filter(it => it.elapsed < it.duration)
     horse.buffs.forEach(it => {
         it.onTick(horse)
-        it.elapsed += blockPassTime
+        it.elapsed += 1
     })
 
     let beforeResult = LoopResult.SUCCESS
     if (block.beforePass) {
         beforeResult = block.beforePass(horse, block, loopCount, score)
 
-        if (beforeResult < 4) {
+        if (beforeResult < 8) {
             block.afterPass && block.afterPass(horse, block, loopCount, score);
         }
     }
