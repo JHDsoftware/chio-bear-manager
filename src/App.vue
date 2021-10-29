@@ -1,7 +1,11 @@
 <template>
-  <v-expand-transition>
-    <router-view/>
-  </v-expand-transition>
+
+  <v-app>
+    <v-app-bar app></v-app-bar>
+    <v-main>
+      <router-view/>
+    </v-main>
+  </v-app>
 </template>
 <script>
   export default {
