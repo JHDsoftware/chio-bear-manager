@@ -36,7 +36,7 @@
 import HorseDetail from "../components/HorseCard";
 
 export default {
-  name: "Hoses.vue",
+  name: "Horses",
   components: {HorseDetail},
   data() {
     return {

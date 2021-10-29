@@ -1,15 +1,43 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import GameRender from "@/page/GameRender";
-
+import HorseList from "@/page/Horses";
+import HorseDetail from "@/page/HorseDetail";
+import EventList from "@/page/Events";
+import MyInfo from "@/page/MyInfo";
+import Training from "@/page/Training";
 Vue.use(VueRouter)
 
 const routes = [
-
     {
         path: '/',
         name: 'Home',
         component: GameRender
+    },
+    {
+        name: 'Horses',
+        path: '/Horses',
+        component: HorseList,
+    },
+    {
+        name: 'Events',
+        path: '/Events',
+        component: EventList,
+    },
+    {
+        name: 'Training',
+        path: '/Training',
+        component: Training,
+    },
+    {
+        name: 'MyInfo',
+        path: '/MyInfo',
+        component: MyInfo,
+    },
+    {
+        name: 'HorseDetail',
+        path: '/HorseDetail',
+        component: HorseDetail,
     },
     {
         path: '/about',

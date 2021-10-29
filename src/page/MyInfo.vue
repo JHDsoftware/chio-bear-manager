@@ -1,15 +1,15 @@
 <template>
     <v-container fluid class="fill-height">
-        <h1>Events</h1>
+            <h1>My</h1>
 
 
     </v-container>
 </template>
 
 <script>
-export default {
-  name: "Events"
-}
+    export default {
+        name: "MyInfo"
+    }
 </script>
 
 <style scoped>
