@@ -10,7 +10,7 @@
           <v-card :key="i"
                   style="width: 100%;height: 100%"
                   v-for="i in mapSizeX*mapSizeY">
-
+            <template v-if="mapInfo[i]">{{ mapInfo[i] }}</template>
           </v-card>
         </div>
       </div>
@@ -30,20 +30,54 @@ export default {
     return {
       mapSizeX: 16,
       mapSizeY: 16,
-      mapInfo: []
+      mapInfo: {}
     };
   },
   methods: {
     generateMap() {
 
     },
-    fromIndexToXY(index){
-      return [index%this.mapSizeX,index/this.mapSizeY]
+    fromIndexToXY(index, size, offset = 0) {
+      return [index % size - offset, Math.floor(index / size) - offset]
     },
-    getNextPossibleSlot(currentIndex = 0) {
-      const direction=getRandomInt(7)
-      console.log(currentIndex,direction)
+    fromXYToIndex(x, y, size) {
+      return y * size + x
+    },
+    getNextPossibleSlot(currentIndex = 0, currentCount = 1) {
+
+      const direction = getRandomInt(8)
+      const [x, y] = this.fromIndexToXY(direction, 3, 1)
+      const [currentX, currentY] = this.fromIndexToXY(currentIndex,
+          this.mapSizeY, 0)
+      console.log(currentX, currentY, 'currentIndex')
+      const mapLimit = this.mapSizeY
+      const fitInBounds = function (number, bounds) {
+        return number >= 0 && number <= bounds
+      }
+      const [afterX, afterY] = [currentX + x, currentY + y]
+      console.log(afterX,afterY,'afterIndex')
+      if (fitInBounds(afterX, mapLimit) && fitInBounds(afterY, mapLimit)) {
+        const slotCount = this.fromXYToIndex(afterX, afterY, mapLimit)
+        if (this.mapInfo[slotCount]) {
+          return this.getNextPossibleSlot(currentIndex, currentCount)
+        } else {
+          this.mapInfo[slotCount] = currentCount
+          return slotCount
+        }
+      } else {
+        return this.getNextPossibleSlot(currentIndex, currentCount)
+      }
+    },
+
+  },
+  mounted() {
+    let i = 1;
+    let slotIndex = 0
+    while (i < 96) {
+      slotIndex = this.getNextPossibleSlot(slotIndex, i)
+      i++
     }
+    console.log(this.mapInfo)
   }
 }
 </script>
