@@ -1,3 +1,5 @@
+import IKUtils from "innerken-js-utils";
+
 export function beforeLoop(slot, horse) {
 }
 
@@ -9,6 +11,24 @@ export function afterLoop(slot, horse) {
 
 export function lastSlotReached() {
 }
+
+const Horse = {
+    hp: 0,
+    stima: 0,
+    baseProperty: {
+        strength: 0,
+
+    }
+}
+
+/*
+* createNewHorse
+*
+*
+* */
+
+const horse = IKUtils.deepCopy(Horse)
+
 
 const Looper = {
     map: [],
@@ -30,7 +50,7 @@ const Looper = {
         if (shouldPassSlot(currentPos)) {
             if (this.currentPosition < this.totalLength()) {
                 this.moveForward()
-            }else{
+            } else {
 
             }
         } else {
