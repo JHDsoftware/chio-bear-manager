@@ -7,14 +7,17 @@
         color="blue">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
       <v-toolbar-title>
-        CHIO Aachen CAMPUS
+        Horse List
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <span>CHIO Aachen CAMPUS</span>
+<!--      <v-spacer></v-spacer>-->
 <!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
     </v-app-bar>
     <v-main>
+
       <v-container>
-        <span>Horse List</span>
+
 
         <HorseDetail :horsesList="horseTest"></HorseDetail>
 
