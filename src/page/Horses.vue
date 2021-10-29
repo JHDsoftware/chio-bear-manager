@@ -1,34 +1,45 @@
 <template>
-  <v-app >
-    <v-app-bar
-        app
-        dark
-        color="blue">
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        Horse List
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <span>CHIO Aachen CAMPUS</span>
-<!--      <v-spacer></v-spacer>-->
-<!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
-    </v-app-bar>
-    <v-main>
+  <!--  <v-app >-->
+  <!--    <v-app-bar-->
+  <!--        app-->
+  <!--        dark-->
+  <!--        color="blue">-->
+  <!--      <v-app-bar-nav-icon></v-app-bar-nav-icon>-->
+  <!--      <v-toolbar-title>-->
+  <!--        Horse List-->
+  <!--      </v-toolbar-title>-->
+  <!--      <v-spacer></v-spacer>-->
+  <!--      <span>CHIO Aachen CAMPUS</span>-->
+  <!--    </v-app-bar>-->
+  <!--    <v-main>-->
 
-      <v-container >
-        <div style="display: grid;
+  <div>
+    <v-card>
+      <div class="d-flex justify-lg-space-between "
+           style="align-content: center;
+                background-color: darkslateblue;
+                color: white;
+                font-size: 30px"
+      >
+        <span style="margin-left: 10px">Horse List</span>
+        <v-spacer></v-spacer>
+        <span style="margin-right: 10px">CHIO Aachen CAMPUS</span>
+      </div>
+    </v-card>
+    <v-container>
+      <div style="display: grid;
         grid-gap: 10px">
-          <template v-for="(horse,index) of horsesList" >
-            <HorseDetail :horse="horse" :key="index"></HorseDetail>
-          </template>
-        </div>
+        <template v-for="(horse,index) in horsesList" >
+          <HorseDetail :horse="horse" :key="index" @click="seeDetail"></HorseDetail>
+        </template>
+      </div>
 
 
+    </v-container>
+  </div>
+  <!--    </v-main>-->
 
-      </v-container>
-    </v-main>
-
-  </v-app>
+  <!--  </v-app>-->
 
 </template>
 
@@ -38,6 +49,11 @@ import HorseDetail from "../components/HorseCard";
 export default {
   name: "Horses",
   components: {HorseDetail},
+  methods:{
+    seeDetail(){
+
+    }
+  },
   data() {
     return {
       horses: {},
@@ -81,7 +97,6 @@ export default {
           character: {},
           skill: {},
         },
-
 
 
       ]

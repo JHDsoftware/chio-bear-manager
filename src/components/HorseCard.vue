@@ -1,37 +1,65 @@
 <template>
   <v-card max-width="100%"
-          height="300px"
+          height="400px"
           class="">
 
 <!--    <v-img class="white&#45;&#45;test align-end"-->
 <!--           height="200px"-->
 <!--          :src="horse.avatar"></v-img>-->
 
-   <div class="d-flex flex-no-wrap justify-space-between">
+
+   <div >
      <div>
-        <v-card-text
-            class="backgroundColor:red"
+       <template v-if="horse.id%2">
+         <div class="d-flex flex-no-wrap justify-space-between">
 
-        v-text="horse.name"/>
+         <v-avatar class="ma-3" size="250" tile>
+           <v-img :src="horse.avatar"></v-img>
+         </v-avatar>
 
-       <v-card-subtitle
-       class=""
-       v-text="horse.race"/>
+           <div>
+             <v-card-text class="backgroundColor:red" v-text="horse.name"/>
+             <v-card-subtitle class="" v-text="horse.race"/>
+             <v-card-actions>
+               <v-btn icon>
+                 <v-icon>mdi-play</v-icon>
+               </v-btn>
+             </v-card-actions>
+           </div>
 
-       <v-card-actions>
-         <v-btn icon>
-           <v-icon>mdi-play</v-icon>
-         </v-btn>
-       </v-card-actions>
+         </div>
+       </template>
+       <template v-else>
 
+         <div class="d-flex flex-no-wrap justify-space-between">
+         <div >
+           <div>
+             <v-card-text class="backgroundColor:red" v-text="horse.name"/>
+             <v-card-subtitle class="" v-text="horse.race"/>
+           </div>
+           <v-card-actions>
+             <v-btn icon>
+               <v-icon>mdi-play</v-icon>
+             </v-btn>
+           </v-card-actions>
+         </div>
+         <v-avatar class="ma-3" size="250" tile>
+           <v-img :src="horse.avatar"></v-img>
+         </v-avatar>
+         </div>
+       </template>
      </div>
-     <v-avatar class="ma-3" size="250" tile>
-       <v-img :src="horse.avatar"></v-img>
-     </v-avatar>
+
    </div>
-    <div >
-      <img src=""/>
-    </div>
+
+<!--    <v-card-actions>-->
+<!--      <v-btn icon>-->
+<!--        <v-icon>mdi-play</v-icon>-->
+<!--      </v-btn>-->
+<!--    </v-card-actions>-->
+<!--    <div style="width: 100%; height: 100px">-->
+<!--      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdLo44E49YbMLPr5JMx8OVKv5UKheHz1FGlg&usqp=CAU"/>-->
+<!--    </div>-->
   </v-card>
 </template>
 
@@ -43,6 +71,7 @@ name: "HorseDetail.vue",
   },
   data(){
     return {
+      orderOdd: false,
       horseTest:{
         id: -1,
         name: null,
