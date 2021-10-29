@@ -17,8 +17,9 @@
               tile
               size="80"
               color="grey"
+
       >
-        <v-img :src="horse.avatar"></v-img>
+        <v-img :src="horse.avatar" ></v-img>
       </v-list-item-avatar>
     </v-list-item>
     <v-divider/>
