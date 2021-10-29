@@ -217,6 +217,89 @@ export const VerticalBarrier = cNew(Block, {
     }
 })
 
+const LargeVerticalBarrier = cNew(Block, {
+    id: 11,
+    name: "large vertical",
+    beforePass: function (horse, block, loopCount, score) {
+        return barrierCheck(horse, score,
+            h => 0.5 * (
+                h.curCourage +
+                h.curSportAbility +
+                h.curSpeedAbility +
+                h.curCooperateAbility +
+                h.curAccurateAbility
+            ) / 8,
+            {
+                success: () => {
+                },
+                greatSuccess: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 1.2,
+                        h => h.curSpeedAbility /= 1.2,
+                    ).applyToHorse(h)
+                },
+                failed: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 0.8,
+                        h => h.curSpeedAbility /= 0.8,
+                    ).applyToHorse(h)
+
+                    h.curScore -= 1
+                },
+                greatFailed: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 0.8,
+                        h => h.curSpeedAbility /= 0.8,
+                    ).applyToHorse(h)
+
+                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+
+                    h.curScore -= 2
+                },
+            },
+        )
+    }
+})
+
+const HealVertical = cNew(Block, {
+    id: 11,
+    name: "heal vertical",
+    beforePass: function (horse, block, loopCount, score) {
+        return barrierCheck(horse, score,
+            h => 0.5 * (
+                h.curCourage +
+                h.curAccurateAbility
+            ) / 3,
+            {
+                success: (h) => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 1.2,
+                        h => h.curSpeedAbility /= 1.2,
+                    ).applyToHorse(h)
+                },
+                greatSuccess: h => {
+                    PropertySimpleBuff(3,
+                        h => h.curSpeedAbility *= 1.2,
+                        h => h.curSpeedAbility /= 1.2,
+                    ).applyToHorse(h)
+                },
+                failed: h => {
+                    PropertySimpleBuff(2,
+                        h => h.curSpeedAbility *= 0.8,
+                        h => h.curSpeedAbility /= 0.8,
+                    ).applyToHorse(h)
+
+                    h.curScore -= 1
+                },
+                greatFailed: h => {
+                    h.curScore -= 4
+                },
+            },
+        )
+    }
+})
+
 export const blockLoop = function (horse, block, loopCount, score) {
     gameBeforeBlockEvent.callbacks.forEach(it => {
         it && it(horse, block, loopCount)
