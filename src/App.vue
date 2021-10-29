@@ -1,16 +1,21 @@
 <template>
 
   <v-app>
-    <v-app-bar app></v-app-bar>
     <v-main>
       <router-view/>
     </v-main>
+    <dashboard-core-drawer/>
   </v-app>
 </template>
 <script>
   export default {
     name: 'App',
+
+    components: {
+      DashboardCoreDrawer: () => import('./components/Drawer'),
+    },
   }
+
 
 </script>
 
