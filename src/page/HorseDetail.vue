@@ -6,18 +6,20 @@
      <div>
         <v-card-text
             class=""
-        v-text="horse.name"/>
+        v-text="horsesList.name"/>
+
        <v-card-subtitle
        class=""
-       v-text="horse.race"/>
+       v-text="horsesList.race"/>
+
        <v-card-actions>
-         <v-btn>
+         <v-btn icon>
            <v-icon>mdi-play</v-icon>
          </v-btn>
        </v-card-actions>
 
-       <v-avatar>
-         <v-img :src="horse.avatar"></v-img>
+       <v-avatar class="ma-3" size="125" tile>
+         <v-img src="horsesList.avatar"></v-img>
        </v-avatar>
 
      </div>
@@ -28,12 +30,15 @@
 <script>
 export default {
 name: "HorseDetail.vue",
+  comments:{
+
+  },
   data(){
     return {
       horse:{
         id: -1,
         name: null,
-        avatar: "",
+        avatar: "@/assets/horse-witch.png",
         race: null,
         property: {
         },
@@ -45,7 +50,12 @@ name: "HorseDetail.vue",
     }
   },
   props:{
-    queryData: null
+    horsesList: Object
+  },
+  watch:{
+    // horse() {
+    //   this.horsesList;
+  // }
   }
 }
 </script>

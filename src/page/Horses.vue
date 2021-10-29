@@ -1,14 +1,8 @@
 <template>
-  <v-card max-width="500"
-          class="">
-    <v-system-bar color="pink darken-2">
-      <v-spacer></v-spacer>
-      <v-icon>mdi-window-minimize</v-icon>
-      <v-icon>mdi-window-maximize</v-icon>
-      <v-icon>mdi-close</v-icon>
-    </v-system-bar>
-
+  <v-app >
     <v-app-bar
+        app
+        absolute
         dark
         color="blue">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -16,17 +10,19 @@
         CHIO Aachen CAMPUS
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>
+<!--      <v-btn icon><v-icon>mdi-magnify</v-icon></v-btn>-->
     </v-app-bar>
+    <v-main>
+      <v-container>
+        <span>Horse List</span>
 
-    <v-container>
-      <span>Horse List</span>
+        <HorseDetail :horsesList="horseTest"></HorseDetail>
 
-      <HorseDetail :property="horseTest"></HorseDetail>
+      </v-container>
+    </v-main>
 
-    </v-container>
+  </v-app>
 
-  </v-card>
 </template>
 
 <script>
@@ -43,6 +39,7 @@ export default {
         id: 1,
         name: "Eminy",
         race: "Witch",
+        avatar: "../assets/horse-witch.png",
         property: {
         },
         character:{
