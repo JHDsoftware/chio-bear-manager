@@ -12,14 +12,6 @@ export function afterLoop(slot, horse) {
 export function lastSlotReached() {
 }
 
-const Horse = {
-    hp: 0,
-    stima: 0,
-    baseProperty: {
-        strength: 0,
-
-    }
-}
 
 /*
 * createNewHorse
