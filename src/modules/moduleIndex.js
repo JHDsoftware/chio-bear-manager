@@ -15,6 +15,7 @@ const Horse = {
     curAccurateAbility: 0,
     curSpeedAbility: 0,
     curCooperateAbility: 0,
+    curScore: 0,
     buffs: []
 }
 
@@ -128,7 +129,7 @@ export const Block = {
     tryCount: 0,
 }
 
-const EmptyBlock = cNew(Block, {
+export const EmptyBlock = cNew(Block, {
     id: 10,
     name: "empty",
     beforePass: function () {
@@ -171,7 +172,7 @@ const barrierCheck = function (h, score, probCallback, effectCallback) {
     return checkResult
 }
 
-const VerticalBarrier = cNew(Block, {
+export const VerticalBarrier = cNew(Block, {
     id: 11,
     name: "vertical",
     beforePass: function (horse, block, loopCount, score) {
@@ -216,7 +217,7 @@ const VerticalBarrier = cNew(Block, {
     }
 })
 
-const blockLoop = function (horse, block, loopCount, score) {
+export const blockLoop = function (horse, block, loopCount, score) {
     gameBeforeBlockEvent.callbacks.forEach(it => {
         it && it(horse, block, loopCount)
     })

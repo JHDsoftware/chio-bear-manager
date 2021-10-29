@@ -25,7 +25,7 @@
             <template v-if="mapInfo[i-1]">
               <template v-if="hasMan(i)">
                 <v-card color="warning" style="z-index: 100">
-                  <v-icon>mdi-hard-hat</v-icon>
+                  <v-icon>mdi-horse-variant</v-icon>
                 </v-card>
               </template>
               <template v-else-if="content(mapInfo[i-1].count)==='barrier'">
@@ -71,7 +71,7 @@
               <span class="caption">SCORE</span>
             </div>
             <div style="width: 100%;text-align: right">
-              <h1>0</h1>
+              <h1>{{score}}</h1>
             </div>
           </v-card>
           <v-card class="pa-2">
@@ -152,8 +152,10 @@ export default {
       flatText: "He move fast, goes through the flat land!.",
       mapSizeY: 12,
       currentManIndex: 1,
+      speed: 1,
       horseStima: 30,
       horseCourage: 30,
+      score:0,
       gameIsStart: false,
       path: [],
       mapInfo: {}
@@ -294,11 +296,13 @@ export default {
       if (currentSlot.content.type === 'barrier') {
         this.horseCourage -= getRandomInt(20)
         this.horseStima -= getRandomInt(10)
+        this.speed=1
         if (this.horseCourage > 30) {
           this.moveManToNextSlot()
         } else {
           this.horseStima += getRandomInt(30)
           this.horseCourage += getRandomInt(30)
+          this.score-=2
           this.flatText = "He is Waiting for the chance!"
         }
       } else {
@@ -307,16 +311,17 @@ export default {
         this.horseStima += getRandomInt(3)
         this.horseCourage += getRandomInt(3)
         this.moveManToNextSlot()
+        this.speed*=1.2
       }
 
       if (!this.shouldEndGame()) {
-        setTimeout(this.gameLoop, 1000)
+        setTimeout(this.gameLoop, 1000/this.speed)
       } else {
         this.flatText = "He is ending the game"
       }
     },
-    moveManToNextSlot() {
-      this.currentManIndex++
+    moveManToNextSlot(speed=1) {
+      this.currentManIndex+=speed
     },
     gameStart() {
       this.gameIsStart = true
