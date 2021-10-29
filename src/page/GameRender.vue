@@ -343,7 +343,7 @@ export default {
       } else {
         d.block = EmptyBlock
         d.content = {
-          type: "flat"
+          type: "flat" 
         }
       }
 
