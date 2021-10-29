@@ -5,32 +5,42 @@
       <h1>Game Map</h1>
     </div>
     <v-card v-if="gameIsStart" dark class="pa-2">
-      <h4>CHIO Flow</h4>
+      <h4>CHIO Flow Step:{{ currentManIndex }}</h4>
       <span style="font-weight: 300">{{ flatText }}</span>
     </v-card>
     <div class="mt-2" style="background: #f6f6f6">
       <div class="pa-2" style="display: grid;
-    grid-template-columns:repeat(12,1fr);
+    grid-template-columns:repeat(12,24px);
      grid-template-rows: repeat(12,24px);
    ">
         <template v-for="i in mapSizeX*mapSizeY">
           <v-card
               elevation="0"
               tile
-              :color="isActive(mapInfo[i-1])?'white':'transparent'"
+              :color="isActive(mapInfo[i-1])?'#E89B00':'transparent'"
               :key="i"
               style="width: 100%;height: 100%;margin: 4px;overflow: visible"
               :style="getSlotMarginString(mapInfo[i - 1])"
           >
             <template v-if="mapInfo[i-1]">
               <template v-if="hasMan(i)">
-                <v-card color="warning" style="z-index: 100">
-                  <v-icon>mdi-horse-variant</v-icon>
+                <v-card color="primary" style="z-index: 100">
+                  <v-icon color="white">mdi-horse-variant</v-icon>
                 </v-card>
               </template>
-              <template v-else-if="content(mapInfo[i-1].count)==='barrier'">
+              <template v-else-if="block(i).id===11">
                 <div>
                   <v-icon>mdi-sign-caution</v-icon>
+                </div>
+              </template>
+              <template v-else-if="block(i).id===12">
+                <div>
+                  <v-icon>mdi-solar-panel-large</v-icon>
+                </div>
+              </template>
+              <template v-else-if="block(i).id===13">
+                <div>
+                  <v-icon>mdi-medical-bag</v-icon>
                 </div>
               </template>
             </template>
@@ -53,7 +63,8 @@
       >
         <div class="pa-2">
           <template>
-            <h2>Horse Status</h2>
+            <h2>{{ horse.name }}</h2>
+            <p>{{ horse.pedigreeCharacterName }}</p>
             <div>Stima
               <v-progress-linear color="warning" height="20"
                                  :buffer-value="horseStima"
@@ -147,25 +158,30 @@
 <script>
 import {getRandomInt} from "@/modules/randomUtils";
 import {shuffle} from "lodash-es";
-import {blockLoop, EmptyBlock, Horse, VerticalBarrier} from "@/modules/moduleIndex";
+import {blockLoop, EmptyBlock, HealVertical, Horse, LargeVerticalBarrier, VerticalBarrier} from "@/modules/moduleIndex";
 
 export default {
   name: "GameRender",
   data: function () {
     return {
       mapSizeX: 12,
-      horse: Object.assign({}, Horse, {curCourage: 100, curSportAbility: 100}),
+      horse: Object.assign({}, Horse, {
+        curCourage: 100, curSportAbility: 100, name: "Amy",
+        curCooperateAbility: 100, curAccurateAbility: 100, curSpeed: 100
+      }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",
       mapSizeY: 12,
       currentManIndex: 1,
-      score: 0,
       gameIsStart: false,
       path: [],
       mapInfo: {}
     };
   },
   computed: {
+    score() {
+      return this.horse.curScore
+    },
     speed() {
       return 1 + (this.horse.curSpeedAbility / 100)
     },
@@ -183,8 +199,8 @@ export default {
     }
   },
   methods: {
-    content(pathIndex) {
-      return this.path[pathIndex]?.content.type
+    block(mapIndex) {
+      return this.pathWithMan[this.pathIndex(mapIndex)]?.block ?? {id: -1}
     },
     hasMan(mapIndex) {
       return this.pathWithMan[this.pathIndex(mapIndex)]?.hasMan
@@ -227,7 +243,6 @@ export default {
         const nearNodes = this.nearbySlots(x, y).map(([x, y]) => this.nearbySlots(x, y)).flat().filter(([x, y]) =>
             this.slotAlreadyInMap(x, y)
         ).length
-        console.log(nearNodes, 'already In map')
         return nearNodes < 4 && !this.mapInfo[slotIndex];
       } else {
         return false
@@ -308,16 +323,27 @@ export default {
       const currentSlot = this.path[this.currentManIndex]
       const res = blockLoop(this.horse, currentSlot.block, this.currentManIndex)
       console.log(res)
-      if (res <= 4) {
-        this.flatText = "He move fast, goes through the flat land!."
-        this.moveManToNextSlot()
-      } else {
-        this.moveManToNextSlot(-1)
-        this.flatText = "He falls on the block! Get injury"
+      switch (res) {
+        case 2:
+        case 4:
+          this.flatText = "He move fast, goes through the flat land!."
+          this.moveManToNextSlot()
+          break
+        case 8:
+          this.flatText = "His attempt failed!"
+          this.moveManToNextSlot(-1)
+          break;
+        case 16:
+          this.flatText = "Huge fail!"
+          this.moveManToNextSlot(-2)
+          break;
+
       }
+
       if (!this.shouldEndGame()) {
         setTimeout(this.gameLoop, 1000 / this.speed)
       } else {
+        this.gameIsStart = false
         this.flatText = "He is ending the game"
       }
     },
@@ -334,20 +360,20 @@ export default {
       this.path = []
       this.mapInfo = {}
     }
-    this.path.forEach((d) => {
-      if (getRandomInt(10) > 8) {
-        d.block = VerticalBarrier
-        d.content = {
-          type: "barrier"
-        }
-      } else {
+    this.path.forEach((d, i) => {
+      if (i < 5) {
         d.block = EmptyBlock
-        d.content = {
-          type: "flat" 
+      } else {
+        if (getRandomInt(100) > 85) {
+          d.block = VerticalBarrier
+        } else if (getRandomInt(100) > 95) {
+          d.block = LargeVerticalBarrier
+        } else if (getRandomInt(100) > 95) {
+          d.block = HealVertical
+        } else {
+          d.block = EmptyBlock
         }
       }
-
-
     })
     console.log(this.path)
 

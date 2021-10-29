@@ -18,6 +18,8 @@ export const Horse = {
     curSpeedAbility: 0,
     curCooperateAbility: 0,
     curScore: 0,
+    inGameCourage: 0,
+    inGameSportAbility: 0,
     buffs: []
 }
 
@@ -134,8 +136,8 @@ export const EmptyBlock = cNew(Block, {
         return LoopResult.SUCCESS
     },
     afterPass: function (h) {
-        h.curCourage += 2
-        h.curSportAbility += 2
+        h.inGameCourage += 2
+        h.inGameSportAbility += 2
     },
 })
 
@@ -164,8 +166,8 @@ const barrierCheck = function (h, score, probCallback, effectCallback) {
 
     selectedEff(h, score)
 
-    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
-    h.curCourage -= BASIC_COURAGE_CONSUMPTION
+    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
+    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION
 
     return checkResult
 }
@@ -205,8 +207,8 @@ export const VerticalBarrier = cNew(Block, {
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
 
-                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
-                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+                    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
 
                     h.curScore -= 1
                 },
@@ -250,8 +252,8 @@ export const LargeVerticalBarrier = cNew(Block, {
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
 
-                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
-                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+                    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
 
                     h.curScore -= 2
                 },
