@@ -95,7 +95,7 @@
               <span class="caption">Bariers</span>
             </div>
             <div style="width: 100%;text-align: right">
-              <h1>0/10</h1>
+              <h1>0/{{ totalBlocks }}</h1>
             </div>
           </v-card>
         </div>
@@ -167,18 +167,23 @@ export default {
       mapSizeX: 12,
       horse: Object.assign({}, Horse, {
         curCourage: 100, curSportAbility: 100, name: "Amy",
-        curCooperateAbility: 100, curAccurateAbility: 100, curSpeed: 100
+        curCooperateAbility: 100, curAccurateAbility: 100, curSpeed: 100,
+        inGameCourage: 100, inGameSportAbility: 100,
       }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",
       mapSizeY: 12,
       currentManIndex: 1,
+      speedMod: 1,
       gameIsStart: false,
       path: [],
       mapInfo: {}
     };
   },
   computed: {
+    totalBlocks() {
+      return this.path.filter(d => d.block?.id !== 10).length
+    },
     score() {
       return this.horse.curScore
     },
@@ -186,10 +191,10 @@ export default {
       return 1 + (this.horse.curSpeedAbility / 100)
     },
     horseCourage() {
-      return this.horse.curCourage
+      return this.horse.inGameCourage
     },
     horseStima() {
-      return this.horse.curSportAbility
+      return this.horse.inGameSportAbility
     },
     pathWithMan() {
       return this.path.map((d, i) => {
@@ -322,7 +327,6 @@ export default {
     gameLoop() {
       const currentSlot = this.path[this.currentManIndex]
       const res = blockLoop(this.horse, currentSlot.block, this.currentManIndex)
-      console.log(res)
       switch (res) {
         case 2:
         case 4:
@@ -331,17 +335,19 @@ export default {
           break
         case 8:
           this.flatText = "His attempt failed!"
+          this.speedMod *= 0.9
           this.moveManToNextSlot(-1)
           break;
         case 16:
           this.flatText = "Huge fail!"
+          this.speedMod = 1
           this.moveManToNextSlot(-2)
           break;
 
       }
-
+      this.speedMod *= 1.1
       if (!this.shouldEndGame()) {
-        setTimeout(this.gameLoop, 1000 / this.speed)
+        setTimeout(this.gameLoop, 1000 / (this.speed * this.speedMod))
       } else {
         this.gameIsStart = false
         this.flatText = "He is ending the game"

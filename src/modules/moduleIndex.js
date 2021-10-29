@@ -136,8 +136,8 @@ export const EmptyBlock = cNew(Block, {
         return LoopResult.SUCCESS
     },
     afterPass: function (h) {
-        h.inGameCourage += 2
-        h.inGameSportAbility += 2
+        h.inGameCourage += 5
+        h.inGameSportAbility += 5
     },
 })
 
@@ -183,7 +183,7 @@ export const VerticalBarrier = cNew(Block, {
                 h.curSpeedAbility +
                 h.curCooperateAbility +
                 h.curAccurateAbility
-            ) / 6,
+            ) / 4,
             {
                 success: () => {
                 },
@@ -228,7 +228,7 @@ export const LargeVerticalBarrier = cNew(Block, {
                 h.curSpeedAbility +
                 h.curCooperateAbility +
                 h.curAccurateAbility
-            ) / 8,
+            ) / 6,
             {
                 success: () => {
                 },
@@ -270,7 +270,7 @@ export const HealVertical = cNew(Block, {
             h => 0.5 * (
                 h.curCourage +
                 h.curAccurateAbility
-            ) / 3,
+            ) / 2,
             {
                 success: (h) => {
                     PropertySimpleBuff(2,
