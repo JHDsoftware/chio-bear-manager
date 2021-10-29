@@ -7,8 +7,6 @@ const Horse = {
     pedigreeCharacterName: [], //特性名称
     skillIds: [], //技巧列表
     skillName: [], //技巧名称
-    maxCourage: 0,
-    minCourage: 0,
     curCourage: 0,
     curSportAbility: 0,
     curAccurateAbility: 0,
