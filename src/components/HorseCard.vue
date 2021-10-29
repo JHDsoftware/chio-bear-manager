@@ -1,8 +1,6 @@
 <template>
   <v-card max-width="100%"
-          elevation="0"
-          @click="seeDetail"
-          >
+          elevation="0" @click="seeDetail">
 
     <v-list-item three-line>
       <v-list-item-content>
