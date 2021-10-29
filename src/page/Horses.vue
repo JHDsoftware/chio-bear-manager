@@ -30,7 +30,11 @@
       <div style="display: grid;
         grid-gap: 10px">
         <template v-for="(horse,index) in horsesList" >
-          <HorseDetail :horse="horse" :key="index" @click="seeDetail"></HorseDetail>
+          <div :key="index">
+          <HorseDetail
+              :horse="horse"
+              ></HorseDetail>
+          </div>
         </template>
       </div>
 
@@ -50,9 +54,7 @@ export default {
   name: "Horses",
   components: {HorseDetail},
   methods:{
-    seeDetail(){
 
-    }
   },
   data() {
     return {

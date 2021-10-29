@@ -1,5 +1,6 @@
 <template>
   <div>
+    hier ist detail
     <img :src="horse.background"/>
   </div>
 </template>
@@ -15,7 +16,9 @@ export default {
     }
   },
   created() {
-    this.horse = Object.assign(this.horse)
+    const _data = this.$route.query.data;
+
+    this.horse = Object.assign(this.horse,_data)
   },
   methods:{
     getQuery(){
