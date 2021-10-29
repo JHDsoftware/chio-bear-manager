@@ -2,6 +2,8 @@
 import IKUtils from "innerken-js-utils";
 import {getRandomInt} from "./randomUtils";
 
+export const myHorseList = []
+
 export const Horse = {
     name: "",
     pedigreeId: 0, //种族
@@ -16,6 +18,8 @@ export const Horse = {
     curSpeedAbility: 0,
     curCooperateAbility: 0,
     curScore: 0,
+    inGameCourage: 0,
+    inGameSportAbility: 0,
     buffs: []
 }
 
@@ -39,10 +43,6 @@ export const Pedigree = {
     minCooperateAbility: 0,
 }
 
-export const PedigreeCharacter = {
-    id: 0,
-    name: ""
-}
 
 const cNew = function (proto, init = {}, dc = IKUtils.deepCopy) {
     return {
@@ -67,19 +67,19 @@ export const gameEndedEvent = cNew(GameEvent)
 const gameBeforeBlockEvent = cNew(GameEvent)
 const gameAfterBlockEvent = cNew(GameEvent)
 
-// 特性
-export const Character = {
-    id: 0,
-    name: null,
-    initBeforeStarted: null,
-}
-
-// 技能
-export const Skill = {
-    id: 0,
-    name: null,
-    initBeforeStarted: null,
-}
+// // 特性
+// const Character = {
+//     id: 0,
+//     name: null,
+//     initBeforeStarted: null,
+// }
+//
+// // 技能
+// const Skill = {
+//     id: 0,
+//     name: null,
+//     initBeforeStarted: null,
+// }
 
 const Buff = {
     id: 0,
@@ -136,8 +136,8 @@ export const EmptyBlock = cNew(Block, {
         return LoopResult.SUCCESS
     },
     afterPass: function (h) {
-        h.curCourage += 2
-        h.curSportAbility += 2
+        h.inGameCourage += 2
+        h.inGameSportAbility += 2
     },
 })
 
@@ -166,8 +166,8 @@ const barrierCheck = function (h, score, probCallback, effectCallback) {
 
     selectedEff(h, score)
 
-    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
-    h.curCourage -= BASIC_COURAGE_CONSUMPTION
+    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
+    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION
 
     return checkResult
 }
@@ -207,8 +207,8 @@ export const VerticalBarrier = cNew(Block, {
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
 
-                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
-                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+                    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
 
                     h.curScore -= 1
                 },
@@ -252,8 +252,8 @@ export const LargeVerticalBarrier = cNew(Block, {
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
 
-                    h.curSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
-                    h.curCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
+                    h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION * 0.5
+                    h.inGameCourage -= BASIC_COURAGE_CONSUMPTION * 0.5
 
                     h.curScore -= 2
                 },

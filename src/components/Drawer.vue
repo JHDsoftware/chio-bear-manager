@@ -33,13 +33,6 @@
                     brief: true,
                 },
                 {
-                    title: 'Training',
-                    icon: 'mdi-horseshoe',
-                    name: 'Training',
-                    to: '/Training',
-                    brief: true,
-                },
-                {
                     icon: 'mdi-account',
                     title: 'My',
                     name: 'MyInfo',
