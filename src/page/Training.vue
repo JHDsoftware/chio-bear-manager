@@ -3,6 +3,7 @@
         <h1>Training</h1>
 
 
+
     </v-container>
 </template>
 

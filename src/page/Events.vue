@@ -4,7 +4,6 @@
                 app
                 dark
                 color="blue">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
             <v-toolbar-title>
                 Event List
             </v-toolbar-title>

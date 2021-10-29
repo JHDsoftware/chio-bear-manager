@@ -1,66 +1,29 @@
 <template>
   <v-card max-width="100%"
-          height="400px"
-          class="">
+          elevation="0">
 
-    <!--    <v-img class="white&#45;&#45;test align-end"-->
-    <!--           height="200px"-->
-    <!--          :src="horse.avatar"></v-img>-->
+    <v-list-item three-line>
+      <v-list-item-content>
+        <div class="text-overline mb-4">
+          {{ horse.pedigree }}
+        </div>
+        <v-list-item-title class="text-h5 mb-1">
+          {{ horse.name }}
+        </v-list-item-title>
+        <v-list-item-subtitle>{{horse.pedigreeCharacterName.join(',')}} </v-list-item-subtitle>
+      </v-list-item-content>
 
-
-    <div>
-      <div>
-        <template v-if="horse.id%2">
-          <div class="d-flex flex-no-wrap justify-space-between">
-
-            <v-avatar class="ma-3" size="250" tile>
-              <v-img :src="horse.avatar"></v-img>
-            </v-avatar>
-
-            <div>
-              <v-card-text class="backgroundColor:red" v-text="horse.name"/>
-              <v-card-subtitle class="" v-text="horse.race"/>
-              <v-card-actions>
-                <v-btn icon @click="seeDetail">
-                  <v-icon>mdi-play</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </div>
-
-          </div>
-        </template>
-        <template v-else>
-
-          <div class="d-flex flex-no-wrap justify-space-between">
-            <div>
-              <div>
-                <v-card-text class="backgroundColor:red" v-text="horse.name"/>
-                <v-card-subtitle class="" v-text="horse.race"/>
-              </div>
-              <v-card-actions>
-                <v-btn icon @click="seeDetail">
-                  <v-icon>mdi-play</v-icon>
-                </v-btn>
-              </v-card-actions>
-            </div>
-            <v-avatar class="ma-3" size="250" tile>
-              <v-img :src="horse.avatar"></v-img>
-            </v-avatar>
-          </div>
-        </template>
-      </div>
-
-    </div>
-
-    <!--    <v-card-actions>-->
-    <!--      <v-btn icon>-->
-    <!--        <v-icon>mdi-play</v-icon>-->
-    <!--      </v-btn>-->
-    <!--    </v-card-actions>-->
-    <!--    <div style="width: 100%; height: 100px">-->
-    <!--      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdLo44E49YbMLPr5JMx8OVKv5UKheHz1FGlg&usqp=CAU"/>-->
-    <!--    </div>-->
+      <v-list-item-avatar
+              tile
+              size="80"
+              color="grey"
+      >
+        <v-img :src="horse.avatar"></v-img>
+      </v-list-item-avatar>
+    </v-list-item>
+    <v-divider/>
   </v-card>
+
 </template>
 
 <script>
@@ -72,12 +35,18 @@ export default {
       orderOdd: false,
       horseTest: {
         id: -1,
-        name: null,
-        avatar: "@/assets/horse-witch.png",
-        race: null,
-        property: {},
-        character: {},
-        skill: {},
+        name: "",
+        pedigreeId: 0, //种族
+        pedigree: "", //种族
+        pedigreeCharacterIds: [], //特性列表
+        pedigreeCharacterName: [], //特性名称
+        skillIds: [], //技巧列表
+        skillName: [], //技巧名称
+        curCourage: 0,
+        curSportAbility: 0,
+        curAccurateAbility: 0,
+        curSpeedAbility: 0,
+        curCooperateAbility: 0,
       }
     }
   },
