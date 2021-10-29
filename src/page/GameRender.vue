@@ -10,7 +10,7 @@
     </v-card>
     <div class="mt-2" style="background: #f6f6f6">
       <div class="pa-2" style="display: grid;
-    grid-template-columns:repeat(12,24px);
+    grid-template-columns:repeat(12,1fr);
      grid-template-rows: repeat(12,24px);
    ">
         <template v-for="i in mapSizeX*mapSizeY">
