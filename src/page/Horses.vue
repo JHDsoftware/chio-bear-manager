@@ -2,7 +2,6 @@
   <v-app >
     <v-app-bar
         app
-        absolute
         dark
         color="blue">
       <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -16,10 +15,15 @@
     </v-app-bar>
     <v-main>
 
-      <v-container>
+      <v-container >
+        <div style="display: grid;
+        grid-gap: 10px">
+          <template v-for="(horse,index) of horsesList" >
+            <HorseDetail :horse="horse" :key="index"></HorseDetail>
+          </template>
+        </div>
 
 
-        <HorseDetail :horsesList="horseTest"></HorseDetail>
 
       </v-container>
     </v-main>
@@ -29,28 +33,58 @@
 </template>
 
 <script>
-import HorseDetail from "./HorseDetail";
+import HorseDetail from "../components/HorseCard";
 
 export default {
   name: "Hoses.vue",
   components: {HorseDetail},
   data() {
     return {
-      horses:{},
+      horses: {},
 
-      horseTest: {
-        id: 1,
-        name: "Eminy",
-        race: "Witch",
-        avatar: "../assets/horse-witch.png",
-        property: {
+      horsesList: [
+        {
+          id: 1,
+          name: "Eminy",
+          race: "Witch",
+          avatar: "http://i2.itc.cn/20180829/36b3_51604eaf_5988_b9aa_4f22_b8d9c4c2299c_1.jpg",
+          property: {},
+          character: {},
+          skill: {},
         },
-        character:{
+        {
+          id: 2,
+          name: "Amy",
+          race: "Witch",
+          avatar: "https://img3.jiemian.com/101/original/20181023/154026091835642000_a640x364.jpg",
+          property: {},
+          character: {},
+          skill: {},
         },
-        skill:{
+        {
+          id: 4,
+          name: "Amy",
+          race: "Witch",
+          avatar: "https://ichef.bbci.co.uk/news/640/cpsprodpb/EA7F/production/_119713006_27999236-21fc-44c2-84a5-8be0eef78ceb.jpg",
+          property: {},
+          character: {},
+          skill: {},
         },
 
-      }
+
+        {
+          id: 3,
+          name: "Amy",
+          race: "Witch",
+          avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
+          property: {},
+          character: {},
+          skill: {},
+        },
+
+
+
+      ]
     }
   }
 }
