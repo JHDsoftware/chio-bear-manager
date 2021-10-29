@@ -315,6 +315,8 @@
         methods: {
             saveHorse() {
                 myHorseList.push(this.horseModel)
+                console.log(myHorseList)
+                this.findHorseDialog = false
             },
     findHorse () {
                 if(this.initChance > 0){

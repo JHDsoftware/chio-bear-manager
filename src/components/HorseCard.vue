@@ -10,7 +10,7 @@
         <v-list-item-title class="text-h5 mb-1">
           {{ horse.name }}
         </v-list-item-title>
-        <v-list-item-subtitle>{{horse.pedigreeCharacterName.join(',')}} </v-list-item-subtitle>
+        <v-list-item-subtitle>{{horse.pedigreeCharacterName}} </v-list-item-subtitle>
       </v-list-item-content>
 
       <v-list-item-avatar
@@ -39,7 +39,7 @@ export default {
         pedigreeId: 0, //种族
         pedigree: "", //种族
         pedigreeCharacterIds: [], //特性列表
-        pedigreeCharacterName: [], //特性名称
+        pedigreeCharacterName: "", //特性名称
         skillIds: [], //技巧列表
         skillName: [], //技巧名称
         curCourage: 0,
