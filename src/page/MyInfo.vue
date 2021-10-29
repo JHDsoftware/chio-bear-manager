@@ -88,7 +88,7 @@
                                 src="https://lh3.googleusercontent.com/proxy/I4HHlzq6oPz09_UkiZdxUPDXvZg9B2Iv3NQVBWN1ORclS2UK1tW6mMInWYPKqBhiq91LHGZJdKOji3ABr8ZgjarJLbsVAq6JIu_LmYrmrGby9TKx"
                         >
                             <v-chip class="text-overline mt-4 ml-4" color="black" dark>
-                               My Opportunity: {{initChance}}
+                                My Opportunity: {{initChance}}
                             </v-chip>
                         </v-img>
 
@@ -109,15 +109,34 @@
                                     <v-img src="../assets/jumping.png"></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <div class="text-overline mb-4">
-                                        Horse
+                                    <div class="text-h5 mb-1">
+                                        {{horseModel.pedigree}}
                                     </div>
-                                    <v-list-item-title class="text-h5 mb-1">
-                                        €100
+                                    <v-list-item-title class="mb-1">
+                                        {{horseModel.pedigreeCharacterName}}
                                     </v-list-item-title>
-                                    <v-list-item-subtitle>
-                                        Horse Horse
-                                    </v-list-item-subtitle>
+                                    <div>
+                                        Courage:
+                                        <v-progress-linear height="10"
+                                                           :value="horseModel.curCourage*10"></v-progress-linear>
+                                        Sport Skill:
+                                        <v-progress-linear height="10"
+                                                           :value="horseModel.curSportAbility*10"></v-progress-linear>
+
+                                        Accurate:
+                                        <v-progress-linear height="10"
+                                                           :value="horseModel.curAccurateAbility*10"></v-progress-linear>
+
+                                        Speed:
+                                        <v-progress-linear height="10"
+                                                           :value="horseModel.curSpeedAbility*10"></v-progress-linear>
+
+                                        Cooperation:
+                                        <v-progress-linear height="10"
+                                                           :value="horseModel.curCooperateAbility*10"></v-progress-linear>
+
+
+                                    </div>
                                 </v-list-item-content>
                             </v-list-item>
 
@@ -160,26 +179,24 @@
                     </v-dialog>
                 </v-tab-item>
                 <v-tab-item>
-                    <v-row justify="space-between">
-                        <v-list>
-                            <v-list-item >
-                                <v-list-item-icon>
-                                    <v-icon color="indigo">
-                                        mdi-phone
-                                    </v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title>余额</v-list-item-title>
-                                <v-list-item-subtitle>€9999</v-list-item-subtitle>
-                            </v-list-item>
-
-
-                        </v-list>
-                    </v-row>
+                    <v-card class="ml-4 mr-4 mt-4" elevation="0">
+                        <div class="d-flex pa-2 justify-space-between">
+                            <v-icon color="black">
+                            mdi-wallet-outline
+                        </v-icon>
+                            €9999
+                        </div>
+                        <div class="d-flex pa-2 justify-space-between">
+                            <v-icon color="black">
+                                mdi-alpha-c-circle
+                            </v-icon>
+                            3765
+                        </div>
+                    </v-card>
 
                 </v-tab-item>
             </v-tabs>
         </v-row>
-
     </v-container>
 </template>
 
@@ -187,6 +204,7 @@
 <script>
 
 
+    import {getRandomInt} from "../modules/randomUtils";
 
     export default {
         name: "MyInfo",
@@ -199,6 +217,25 @@
                 items: [
                     'Market', 'Find', 'My Wallet'
                 ],
+                horseModel:{
+                    avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
+                    pedigreeId: 0, //种族
+                    pedigree: "", //种族
+                    pedigreeCharacterIds: [], //特性列表
+                    pedigreeCharacterName: "小巧灵活", //特性名称
+                    skillIds: [], //技巧列表
+                    skillName: [], //技巧名称
+                    curCourage: 0,
+                    curSportAbility: 0,
+                    curAccurateAbility: 0,
+                    curSpeedAbility: 0,
+                    curCooperateAbility: 0,
+                },
+                horseArray: ['Carolina Marsh Tucky', 'Arabian Horse', 'Morgan Horse', 'Friesian Horse',
+                    'Gypsy horse','Marwari Horse','Orlov Trotter','Hackney Horse','Andalusian Horse','Irish Thoroughbred'],
+                horseCharacter: ['Strong personality','Quiet','Stable personality'],
+                horseSizeArray: ['Big Size','Medium Size','Small Size'],
+                horseTempArray: ['Brave','Normal','cowardly'],
                 horsesList: [
                     {
                         id: 1,
@@ -270,9 +307,28 @@
             }
         },
         methods: {
-
-            findHorse () {
+    findHorse () {
                 if(this.initChance > 0){
+
+                    let pedigreeId = getRandomInt(9)
+
+                    console.log(pedigreeId)
+                    this.horseModel = {
+                        avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
+                        pedigreeId: pedigreeId, //种族
+                        pedigree: this.horseArray[pedigreeId], //种族
+                        pedigreeCharacterIds: [], //特性列表
+                        pedigreeCharacterName: this.horseCharacter[ getRandomInt(3)] + ', ' + this.horseTempArray[
+                            getRandomInt(3)] + ', ' +  this.horseSizeArray[
+                            getRandomInt(3)], //特性名称
+                        skillIds: [], //技巧列表
+                        skillName: [], //技巧名称
+                        curCourage: getRandomInt(9),
+                        curSportAbility: getRandomInt(9),
+                        curAccurateAbility: getRandomInt(9),
+                        curSpeedAbility: getRandomInt(9),
+                        curCooperateAbility: getRandomInt(9),
+                    }
                     this.findHorseDialog = this.initChance > 0
                     this.initChance --
                 }else{
