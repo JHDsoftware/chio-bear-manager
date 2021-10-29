@@ -14,10 +14,11 @@ const Horse = {
     curAccurateAbility: 0,
     curSpeedAbility: 0,
     curCooperateAbility: 0,
+    buffs: []
 }
 
 //马的种族实体
-const Pedigree = {
+export const Pedigree = {
     id: 0,
     name: 0,
     pedigreeCharacterIds: [], //特性列表
@@ -111,7 +112,7 @@ const HpRegenerationBuff = cNew(Buff, {
     }
 })
 
-const Block = {
+export const Block = {
     id: 0,
     name: null,
     beforePass: null,
@@ -126,7 +127,7 @@ const LoopResult = {
     GREAT_FAILED: 8,
 }
 
-const blockLoop = function (horse, block, loopCount, score, blockPassTime) {
+export const blockLoop = function (horse, block, loopCount, score, blockPassTime) {
     gameBeforeBlockEvent.callbacks.forEach(it => {
         it && it(horse, block, loopCount)
     })

@@ -1,25 +1,20 @@
-export function beforeLoop(slot, horse) {
-}
-
-export function shouldPassSlot(slot, horse) {
-}
-
-export function afterLoop(slot, horse) {
-}
-
-export function lastSlotReached(horse) {
-}
+import {Block, blockLoop, Pedigree} from "@/modules/moduleIndex";
+import IKUtils from "innerken-js-utils";
 
 const Looper = {
-    map: [],
+    map: [].fill(Block, 0, 40),
     loopCount: 0,
     totalTime: 0,
     currentPosition: 0,
+    totalScore: 0,
     totalLength: () => {
-        return map.length
+        return this.map.length
+    },
+    shouldEnd: () => {
+        return this.loopCount > 50
     },
     start: () => {
-
+        setTimeout(this.onLoop, 1000)
     },
     holdPosition: () => {
     },
@@ -28,18 +23,12 @@ const Looper = {
     },
     onLoop: () => {
         const currentPos = this.map[this.currentPosition]
-        beforeLoop(currentPos)
-        if (shouldPassSlot(currentPos)) {
-            if (this.currentPosition < this.totalLength()) {
-                this.moveForward()
-            } else {
-
-            }
-        } else {
-
+        blockLoop(IKUtils.deepCopy(Pedigree), currentPos, this.loopCount, this.totalScore)
+        this.loopCount++
+        this.moveForward()
+        if (!this.shouldEnd()) {
+            setTimeout(this.onLoop, 1000)
         }
-        afterLoop(currentPos)
-
     }
 }
 

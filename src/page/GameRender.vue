@@ -1,29 +1,97 @@
 <template>
   <v-container fluid class="fill-height">
     <div>
-      <h1>地图</h1>
+      <div class="d-flex justify-space-between">
+        <h1>Game Map</h1>
+        <h1>Loop: 15</h1>
+      </div>
       <div style="background: #f6f6f6">
         <div style="display: grid;
     grid-template-columns:repeat(16,24px);
+    grid-gap: 2px;
      grid-template-rows: repeat(16,24px);
    ">
           <template v-for="i in mapSizeX*mapSizeY">
             <v-card
                 elevation="0"
                 tile
-                :color="isActive(mapInfo[i-1])?'primary':'transparent'"
+                :color="isActive(mapInfo[i-1])?'white':'transparent'"
                 :key="i"
-                style="width: 100%;height: 100%;margin: 4px;"
+                style="width: 100%;height: 100%;margin: 4px;overflow: visible"
                 :style="getSlotMarginString(mapInfo[i - 1])"
             >
               <template v-if="mapInfo[i-1]">
-                {{ mapInfo[i - 1].count }}
+                <template v-if="hasMan(i)">
+                  <v-card color="warning" style="z-index: 100">
+                    <v-icon>mdi-hard-hat</v-icon>
+                  </v-card>
+                </template>
+                <template v-else-if="content(mapInfo[i-1].count)==='barrier'">
+                  <div>
+                    <v-icon>mdi-sign-caution</v-icon>
+                  </div>
+                </template>
               </template>
+
             </v-card>
           </template>
 
         </div>
       </div>
+
+      <div style="display: grid;grid-template-columns: repeat(2,1fr)">
+
+        <div class="pa-2">
+          <h2>Horse Status</h2>
+          <div>Stima
+            <v-progress-linear color="warning" height="20"
+                               buffer-value="43"
+                               stream></v-progress-linear>
+          </div>
+          <div>Bravery
+            <v-progress-linear color="error" height="20"
+                               buffer-value="22"
+                               stream></v-progress-linear>
+          </div>
+          <v-btn class="mt-2" color="primary" block>Start Game</v-btn>
+        </div>
+        <div class="pa-2">
+          <h2>Leaderboard</h2>
+          <v-card dark class=" d-flex pa-2">
+            <div>Ongoing Aaden</div>
+            <v-spacer></v-spacer>
+            <v-icon color="white">mdi-hard-hat</v-icon>
+          </v-card>
+          <v-card elevation="0" outlined tile class=" d-flex pa-2">
+            <div>1. Falcon</div>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-numeric-1</v-icon>
+          </v-card>
+          <v-card elevation="0" outlined tile class=" d-flex pa-2">
+            <div>2. Falcon</div>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-numeric-1</v-icon>
+          </v-card>
+          <v-card elevation="0" outlined tile class=" d-flex pa-2">
+            <div>3. Falcon</div>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-numeric-1</v-icon>
+          </v-card>
+          <v-card elevation="0" outlined tile class=" d-flex pa-2">
+            <div>4. Falcon</div>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-numeric-1</v-icon>
+          </v-card>
+          <v-card elevation="0" outlined tile class=" d-flex pa-2">
+            <div>5. Falcon</div>
+            <v-spacer></v-spacer>
+            <v-icon>mdi-numeric-1</v-icon>
+          </v-card>
+        </div>
+
+      </div>
+
+
     </div>
 
 
@@ -40,12 +108,31 @@ export default {
   data: function () {
     return {
       mapSizeX: 16,
+      horseList:["Aaden","Rabbit","Amy",""],
       mapSizeY: 16,
+      currentManIndex: 1,
       path: [],
       mapInfo: {}
     };
   },
+  computed: {
+    pathWithMan() {
+      return this.path.map((d, i) => {
+        d.hasMan = this.currentManIndex === i
+        return d
+      })
+    }
+  },
   methods: {
+    content(pathIndex) {
+      return this.path[pathIndex]?.content.type
+    },
+    hasMan(mapIndex) {
+      return this.pathWithMan[this.pathIndex(mapIndex)]?.hasMan
+    },
+    pathIndex(mapIndex) {
+      return this.mapInfo[mapIndex - 1].count
+    },
     isActive(slot) {
       return !!slot
     },
@@ -111,7 +198,6 @@ export default {
       return [afterX, afterY]
     },
     isAtMy(a, b) {
-      console.log(a, b)
       if (a.x - b.x === 1) {
         return 'margin-left:0;'
       } else if (a.x - b.x === -1) {
@@ -122,7 +208,9 @@ export default {
         return 'margin-bottom:0;'
       }
     },
-
+    addNewPointToMap(count, x, y) {
+      this.path.push({count, x, y})
+    },
     getNextPossibleSlot(currentIndex = 0, currentCount = 1) {
       const way = [1, 3, 5, 7]
       const direction = way[(getRandomInt(3))]
@@ -130,7 +218,7 @@ export default {
       const setIndex = (x, y, count) => {
         const index = this.fromXYToIndex(x, y, this.mapSizeY)
         const [oldX, oldY] = this.fromIndexToXY(currentIndex, this.mapSizeY)
-        this.path.push({count, x, y})
+        this.addNewPointToMap(count, x, y)
         this.$set(this.mapInfo, index, {count, x, y, comesFrom: this.isAtMy({x, y}, {x: oldX, y: oldY})})
         this.$set(this.mapInfo[currentIndex], 'goesTo', this.isAtMy({x: oldX, y: oldY}, {x, y}))
         return index
@@ -140,7 +228,6 @@ export default {
 
       if (this.slotIsPossible(afterX, afterY)) {
         return setIndex(afterX, afterY, currentCount)
-
       } else {
         const nearSlots = this.nearbySlots(...this.fromIndexToXY(currentIndex, this.mapSizeY))
         for (const [x, y] of nearSlots) {
@@ -154,13 +241,36 @@ export default {
 
     },
 
+    gameLoop() {
+      this.moveManToNextSlot()
+    },
+    moveManToNextSlot() {
+      this.currentManIndex++
+    },
+    gameStart() {
+      setInterval(this.moveManToNextSlot, 1000)
+    }
   },
   mounted() {
-    //this.generateMap()
     while (this.generateMap() < 90) {
+      this.path = []
       this.mapInfo = {}
     }
-    console.log(this.mapInfo)
+    this.path.forEach((d) => {
+      if (getRandomInt(10) > 8) {
+        d.content = {
+          type: "barrier"
+        }
+      } else {
+        d.content = {
+          type: "flat"
+        }
+      }
+
+
+    })
+    console.log(this.path)
+
   }
 }
 </script>
