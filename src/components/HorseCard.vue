@@ -1,6 +1,8 @@
 <template>
   <v-card max-width="100%"
-          elevation="0">
+          elevation="0"
+          @click="seeDetail"
+          >
 
     <v-list-item three-line>
       <v-list-item-content>
@@ -43,10 +45,10 @@ export default {
         skillIds: [], //技巧列表
         skillName: [], //技巧名称
         curCourage: 0,
-        curSportAbility: 0,
-        curAccurateAbility: 0,
-        curSpeedAbility: 0,
-        curCooperateAbility: 0,
+        curSportAbility: 2,
+        curAccurateAbility: 3,
+        curSpeedAbility: 3,
+        curCooperateAbility: 5,
       }
     }
   },

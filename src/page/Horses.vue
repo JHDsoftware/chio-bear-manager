@@ -19,7 +19,7 @@
       </v-carousel>
 
       <div class="mt-4" style="display: grid;
-        grid-gap: 10px">
+        grid-gap: 10px" >
         <template v-for="(horse,index) in horsesList" >
           <div :key="index">
           <HorseDetail
@@ -67,11 +67,11 @@ export default {
           pedigreeCharacterName: ["比较平庸","耐力好","比较温顺"], //特性名称
           skillIds: [], //技巧列表
           skillName: [], //技巧名称
-          curCourage: 0,
-          curSportAbility: 0,
-          curAccurateAbility: 0,
-          curSpeedAbility: 0,
-          curCooperateAbility: 0,
+          curCourage: 11,
+          curSportAbility: 11,
+          curAccurateAbility: 11,
+          curSpeedAbility: 11,
+          curCooperateAbility: 11,
         },
         {
           id: 2,
@@ -83,11 +83,11 @@ export default {
           pedigreeCharacterName: ["强壮温和"], //特性名称
           skillIds: [], //技巧列表
           skillName: [], //技巧名称
-          curCourage: 0,
-          curSportAbility: 0,
-          curAccurateAbility: 0,
-          curSpeedAbility: 0,
-          curCooperateAbility: 0,
+          curCourage: 20,
+          curSportAbility: 20,
+          curAccurateAbility: 20,
+          curSpeedAbility: 20,
+          curCooperateAbility: 20,
         },
         {
           id: 3,
@@ -99,11 +99,11 @@ export default {
           pedigreeCharacterName: ["极为劣性","亢奋易冲动"], //特性名称
           skillIds: [], //技巧列表
           skillName: [], //技巧名称
-          curCourage: 0,
-          curSportAbility: 0,
-          curAccurateAbility: 0,
-          curSpeedAbility: 0,
-          curCooperateAbility: 0,
+          curCourage: 32,
+          curSportAbility: 32,
+          curAccurateAbility: 32,
+          curSpeedAbility: 32,
+          curCooperateAbility: 32,
         },
         {
           id: 4,
@@ -115,15 +115,18 @@ export default {
           pedigreeCharacterName: ["小巧灵活"], //特性名称
           skillIds: [], //技巧列表
           skillName: [], //技巧名称
-          curCourage: 0,
-          curSportAbility: 0,
-          curAccurateAbility: 0,
-          curSpeedAbility: 0,
-          curCooperateAbility: 0,
+          curCourage: 88,
+          curSportAbility: 88,
+          curAccurateAbility: 88,
+          curSpeedAbility: 88,
+          curCooperateAbility: 88,
         },
 
 
-      ]
+      ],
+
+
+
     }
   }
 }
