@@ -76,10 +76,8 @@
             </div>
 
           </template>
-          <v-btn @click="()=>gameIsStart=false"
-                 block class="mt-2"
-                 color="warning">Pause Game
-          </v-btn>
+          <horse-stat :horse-model="horse"></horse-stat>
+
         </div>
         <div class="pa-2">
           <v-card class="pa-2">
@@ -90,7 +88,14 @@
               <h1>{{ score }}</h1>
             </div>
           </v-card>
-         <horse-stat :horse-model="horse"></horse-stat>
+          <v-card class="pa-2">
+            <div class="">
+              <span class="caption">SCORE</span>
+            </div>
+            <div style="width: 100%;text-align: right">
+              <h1>{{ Perform + '/' + Check }}</h1>
+            </div>
+          </v-card>
         </div>
       </div>
     </template>
@@ -151,9 +156,18 @@
 <script>
 import {getRandomInt} from "@/modules/randomUtils";
 import {shuffle} from "lodash-es";
-import {blockLoop, EmptyBlock, HealVertical, Horse, LargeVerticalBarrier, VerticalBarrier} from "@/modules/moduleIndex";
+import {
+  blockLoop,
+  Check,
+  EmptyBlock,
+  HealVertical,
+  Horse,
+  LargeVerticalBarrier, Perform,
+  VerticalBarrier
+} from "@/modules/moduleIndex";
 import {randomBlockIndexList} from "@/modules/spreadBlock";
 import HorseStat from "@/components/HorseStat";
+
 
 export default {
   name: "GameRender",
@@ -164,7 +178,7 @@ export default {
       horse: Object.assign({}, Horse, {
         curCourage: 100, curSportAbility: 56, name: "Amy",
         curCooperateAbility: 78, curAccurateAbility: 43, curSpeedAbility: 25,
-        inGameCourage: 100, inGameSportAbility: 100,
+        inGameCourage: 100, inGameSportAbility: 100, check: 0, perform: 0
       }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",
@@ -173,7 +187,8 @@ export default {
       speedMod: 1,
       gameIsStart: false,
       path: [],
-      mapInfo: {}
+      mapInfo: {},
+      Check, Perform
     };
   },
   computed: {
@@ -182,6 +197,12 @@ export default {
     },
     score() {
       return this.horse.curScore
+    },
+    perform() {
+      return this.horse.perform
+    },
+    check() {
+      return this.horse.check
     },
     speed() {
       return 1 + (this.horse.curSpeedAbility / 100)
@@ -367,7 +388,6 @@ export default {
       const id = map[i]
       d.block = blocks[id]
     })
-    console.log(this.path)
 
   }
 }

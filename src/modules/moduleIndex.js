@@ -143,20 +143,18 @@ export const EmptyBlock = cNew(Block, {
 
 const BASIC_SPORT_ABILITY_CONSUMPTION = 15
 const BASIC_COURAGE_CONSUMPTION = 10
+export let Check = 0
 
-export const broadcastCheckAndPerformance = function (check, performance, greatPerf) {
 
-}
-
-const barrierCheck = function (h, score, probCallback, effectCallback) {
+const barrierCheck = async function (h, score, probCallback, effectCallback) {
     const prob = probCallback(h)
-
+    h.check = prob
     const performance = localGetRandomInt(100)
+    h.perform = performance
     const great = localGetRandomInt(100)
 
-    const greatPerf = great < 20 ? 1 : 0
 
-    broadcastCheckAndPerformance(prob, performance, greatPerf)
+    const greatPerf = great < 20 ? 1 : 0
 
     const branch = (performance < prob ? 0 : 2) + (greatPerf)
     const selectedEff = [
