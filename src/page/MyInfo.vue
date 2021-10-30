@@ -100,7 +100,7 @@
               <v-list-item three-line>
                 <v-list-item-content>
                   <v-text-field
-                      label="Give it an name!"
+                      label="Happy"
                       v-model=horseModel.name
                   ></v-text-field>
                   <div class="text-h5 mb-1">
@@ -303,7 +303,9 @@ export default {
   },
   methods: {
     saveHorse() {
-
+      if(!this.horseModel.name) {
+        this.horseModel.name = "Happy"
+      }
       myHorseList.push(this.horseModel)
       console.log(myHorseList)
       this.findHorseDialog = false
@@ -314,6 +316,7 @@ export default {
         let pedigreeId = getRandomInt(9)
 
         console.log(pedigreeId)
+
         this.horseModel = {
           avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
           pedigreeId: pedigreeId, //种族
