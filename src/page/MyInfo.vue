@@ -126,22 +126,24 @@
                                     <div>
                                         Courage:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curCourage*10"></v-progress-linear>
+                                                           :value="horseModel.curCourage"></v-progress-linear>
                                         Sport Skill:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curSportAbility*10"></v-progress-linear>
+                                                           :value="horseModel.curSportAbility"></v-progress-linear>
 
                                         Accurate:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curAccurateAbility*10"></v-progress-linear>
+                                                           :value="horseModel.curAccurateAbility"></v-progress-linear>
 
                                         Speed:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curSpeedAbility*10"></v-progress-linear>
+                                                           :value="horseModel.curSpeedAbility"></v-progress-linear>
 
                                         Cooperation:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curCooperateAbility*10"></v-progress-linear>
+                                                           :value="horseModel.curCooperateAbility"></v-progress-linear>
+
+
                                     </div>
                                 </v-list-item-content>
                             </v-list-item>
@@ -338,11 +340,11 @@
                             getRandomInt(3)], //特性名称
                         skillIds: [], //技巧列表
                         skillName: [], //技巧名称
-                        curCourage: getRandomInt(9),
-                        curSportAbility: getRandomInt(9),
-                        curAccurateAbility: getRandomInt(9),
-                        curSpeedAbility: getRandomInt(9),
-                        curCooperateAbility: getRandomInt(9),
+                        curCourage: getRandomInt(100),
+                        curSportAbility: getRandomInt(100),
+                        curAccurateAbility: getRandomInt(100),
+                        curSpeedAbility: getRandomInt(100),
+                        curCooperateAbility: getRandomInt(100),
                     }
                     this.findHorseDialog = this.initChance > 0
                     this.initChance --
