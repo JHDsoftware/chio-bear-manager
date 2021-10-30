@@ -137,12 +137,12 @@ export const EmptyBlock = cNew(Block, {
     },
     afterPass: function (h) {
         h.inGameCourage += 3
-        h.inGameSportAbility += 3
+        h.inGameSportAbility += 5
     },
 })
 
 const BASIC_SPORT_ABILITY_CONSUMPTION = 15
-const BASIC_COURAGE_CONSUMPTION = 15
+const BASIC_COURAGE_CONSUMPTION = 10
 
 const barrierCheck = function (h, score, probCallback, effectCallback) {
     const prob = probCallback(h)
