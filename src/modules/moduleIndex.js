@@ -2,6 +2,7 @@
 import IKUtils from "innerken-js-utils";
 import {getRandomInt} from "./randomUtils";
 
+export let allInitialPoint = 100
 export const myHorseList = []
 
 export const Horse = {
