@@ -1,35 +1,30 @@
 <template>
-  <v-card max-width="100%"
-          elevation="0" @click="seeDetail">
-
-    <v-list-item three-line>
-      <v-list-item-content>
-        <div class="text-overline mb-4">
-          {{ horse.pedigree }}
-        </div>
-        <v-list-item-title class="text-h5 mb-1">
-          {{ horse.name }}
-        </v-list-item-title>
-        <v-list-item-subtitle>{{horse.pedigreeCharacterName}} </v-list-item-subtitle>
-      </v-list-item-content>
-
-      <v-list-item-avatar
-              tile
-              size="80"
-              color="grey"
-
-      >
-        <v-img :src="horse.avatar" ></v-img>
-      </v-list-item-avatar>
-    </v-list-item>
-    <v-divider/>
+  <v-card
+      class="d-flex justify-space-between"
+      elevation="0" @click="seeDetail">
+    <div>
+      <h1>{{ horse.name }}</h1>
+      <div>
+        Level:20
+        <v-progress-linear color="warning" value="25" striped height="20"></v-progress-linear>
+      </div>
+      {{ horse.pedigree }}
+      <v-list-item-subtitle>{{ horse.pedigreeCharacterName }}</v-list-item-subtitle>
+    </div>
+    <div class="pa-2 pr-4">
+      <h3>Status</h3>
+      <horse-stat style="width: 144px" :horse-model="horse"></horse-stat>
+    </div>
   </v-card>
 
 </template>
 
 <script>
+import HorseStat from "@/components/HorseStat";
+
 export default {
   name: "HorseDetail.vue",
+  components: {HorseStat},
   comments: {},
   data() {
     return {
