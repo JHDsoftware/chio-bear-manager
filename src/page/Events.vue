@@ -1,41 +1,67 @@
 <template>
-    <v-container fluid class="fill-height">
+    <v-container>
+      <h1>Event</h1>
+      <v-divider></v-divider>
+      <div class="pa-2">
         <v-card
-                class="mx-auto  mb-4"
-                max-width="344"
-                outlined
+            class="mx-auto mb-4"
         >
-            <v-list-item three-line>
-                <v-list-item-content>
-                    <div class="text-overline mb-4">
-                        PVP
-                    </div>
-                    <v-list-item-title class="text-h5 mb-1">
-                        JUMPING
-                    </v-list-item-title>
-                    <v-list-item-subtitle>The international show jumping elite has already been meeting up here for many years striving to ride to victory in the coveted competitions of the CHIO Aachen. </v-list-item-subtitle>
-                </v-list-item-content>
-
-                <v-list-item-avatar
-                        tile
-                        size="80"
-                        color="grey"
-                >
-                    <v-img src="../assets/jumping.png"></v-img>
-                </v-list-item-avatar>
-            </v-list-item>
-
-            <v-card-actions>
-               <v-spacer/> <v-btn
-                        outlined
-                        rounded
-                        text
-                        @click="beginGame"
-                >
-                    Begin Now!
-                </v-btn>
-            </v-card-actions>
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5 mb-1">
+                JUMPING
+              </v-list-item-title>
+              <v-list-item-subtitle>The international show jumping elite has already been meeting up here for many years striving to ride to victory in the coveted competitions of the CHIO Aachen. </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-avatar
+                tile
+                size="80"
+                color="grey"
+            >
+              <v-img src="../assets/jumping.png"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
         </v-card>
+<v-card
+            class="mx-auto mb-4"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5 mb-1">
+                JUMPING
+              </v-list-item-title>
+              <v-list-item-subtitle>The international show jumping elite has already been meeting up here for many years striving to ride to victory in the coveted competitions of the CHIO Aachen. </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-avatar
+                tile
+                size="80"
+                color="grey"
+            >
+              <v-img src="../assets/jumping.png"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+<v-card
+            class="mx-auto mb-4"
+        >
+          <v-list-item three-line>
+            <v-list-item-content>
+              <v-list-item-title class="text-h5 mb-1">
+                JUMPING
+              </v-list-item-title>
+              <v-list-item-subtitle>The international show jumping elite has already been meeting up here for many years striving to ride to victory in the coveted competitions of the CHIO Aachen. </v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-avatar
+                tile
+                size="80"
+                color="grey"
+            >
+              <v-img src="../assets/jumping.png"></v-img>
+            </v-list-item-avatar>
+          </v-list-item>
+        </v-card>
+
+      </div>
 
         <v-card
                 class="mx-auto mb-4"
