@@ -3,22 +3,22 @@
 
 
     Courage:
-    <v-progress-linear height="10"
-                       :value="horseModel.curCourage"></v-progress-linear>
+    <v-progress-linear :height="barHeight"
+                       :value="horseModel.curCourage/2"></v-progress-linear>
     Sport Skill:
-    <v-progress-linear height="10"
-                       :value="horseModel.curSportAbility"></v-progress-linear>
+    <v-progress-linear :height="barHeight"
+                       :value="horseModel.curSportAbility/2"></v-progress-linear>
 
     Accurate:
-    <v-progress-linear height="10"
-                       :value="horseModel.curAccurateAbility"></v-progress-linear>
+    <v-progress-linear :height="barHeight"
+                       :value="horseModel.curAccurateAbility/2"></v-progress-linear>
 
     Speed:
-    <v-progress-linear height="10"
-                       :value="horseModel.curSpeedAbility"></v-progress-linear>
+    <v-progress-linear :height="barHeight"
+                       :value="horseModel.curSpeedAbility/2"></v-progress-linear>
 
     Cooperation:
-    <v-progress-linear height="10"
+    <v-progress-linear :height="barHeight"
                        :value="horseModel.curCooperateAbility"></v-progress-linear>
   </div>
 </template>
@@ -29,6 +29,10 @@ export default {
   props: {
     horseModel: {
       type: Object
+    },
+    barHeight: {
+      type: Number,
+      default: 5,
     }
   }
 }
