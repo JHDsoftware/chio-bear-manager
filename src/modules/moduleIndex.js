@@ -144,12 +144,21 @@ export const EmptyBlock = cNew(Block, {
 const BASIC_SPORT_ABILITY_CONSUMPTION = 15
 const BASIC_COURAGE_CONSUMPTION = 10
 
+export const broadcastCheckAndPerformance = function (check, performance, greatPerf) {
+
+}
+
 const barrierCheck = function (h, score, probCallback, effectCallback) {
     const prob = probCallback(h)
 
     const performance = localGetRandomInt(100)
     const great = localGetRandomInt(100)
-    const branch = (performance < prob ? 0 : 2) + (great < 20 ? 1 : 0)
+
+    const greatPerf = great < 20 ? 1 : 0
+
+    broadcastCheckAndPerformance(prob, performance, greatPerf)
+
+    const branch = (performance < prob ? 0 : 2) + (greatPerf)
     const selectedEff = [
         effectCallback.success,
         effectCallback.greatSuccess,
