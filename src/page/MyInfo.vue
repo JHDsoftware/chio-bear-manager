@@ -126,22 +126,22 @@
                                     <div>
                                         Courage:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curCourage"></v-progress-linear>
+                                                           :value="horseModel.curCourage/2"></v-progress-linear>
                                         Sport Skill:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curSportAbility"></v-progress-linear>
+                                                           :value="horseModel.curSportAbility/2"></v-progress-linear>
 
                                         Accurate:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curAccurateAbility"></v-progress-linear>
+                                                           :value="horseModel.curAccurateAbility/2"></v-progress-linear>
 
                                         Speed:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curSpeedAbility"></v-progress-linear>
+                                                           :value="horseModel.curSpeedAbility/2"></v-progress-linear>
 
                                         Cooperation:
                                         <v-progress-linear height="10"
-                                                           :value="horseModel.curCooperateAbility"></v-progress-linear>
+                                                           :value="horseModel.curCooperateAbility/2"></v-progress-linear>
 
 
                                     </div>
@@ -213,7 +213,7 @@
 <script>
 
 
-    import {getRandomInt} from "../modules/randomUtils";
+    import {getRandomFromRange, getRandomInt} from "../modules/randomUtils";
     import {myHorseList} from "../modules/moduleIndex";
 
     export default {
@@ -253,9 +253,9 @@
                         name: "Eminy",
                         avatar: "http://i2.itc.cn/20180829/36b3_51604eaf_5988_b9aa_4f22_b8d9c4c2299c_1.jpg",
                         pedigreeId: 0, //种族
-                        pedigree: "冰岛马", //种族
+                        pedigree: "Carolina Marsh Tucky", //种族
                         pedigreeCharacterIds: [], //特性列表
-                        pedigreeCharacterName: ["比较平庸","耐力好","比较温顺"], //特性名称
+                        pedigreeCharacterName: ["Strong personality","Medium Size","Brave"], //特性名称
                         skillIds: [], //技巧列表
                         skillName: [], //技巧名称
                         curCourage: 0,
@@ -269,9 +269,9 @@
                         name: "Amy",
                         avatar: "https://img3.jiemian.com/101/original/20181023/154026091835642000_a640x364.jpg",
                         pedigreeId: 0, //种族
-                        pedigree: "汉诺威马", //种族
+                        pedigree: "Morgan Horse", //种族
                         pedigreeCharacterIds: [], //特性列表
-                        pedigreeCharacterName: ["强壮温和"], //特性名称
+                        pedigreeCharacterName: ["Quiet","Small Size","Cowardly"], //特性名称
                         skillIds: [], //技巧列表
                         skillName: [], //技巧名称
                         curCourage: 0,
@@ -285,9 +285,9 @@
                         name: "Linda",
                         avatar: "https://ichef.bbci.co.uk/news/640/cpsprodpb/EA7F/production/_119713006_27999236-21fc-44c2-84a5-8be0eef78ceb.jpg",
                         pedigreeId: 0, //种族
-                        pedigree: "阿拉伯马", //种族
+                        pedigree: "Irish Thoroughbred", //种族
                         pedigreeCharacterIds: [], //特性列表
-                        pedigreeCharacterName: ["极为劣性","亢奋易冲动"], //特性名称
+                        pedigreeCharacterName: ["Stable personality","Big Size","Normal"], //特性名称
                         skillIds: [], //技巧列表
                         skillName: [], //技巧名称
                         curCourage: 0,
@@ -296,24 +296,6 @@
                         curSpeedAbility: 0,
                         curCooperateAbility: 0,
                     },
-                    {
-                        id: 4,
-                        name: "Feya",
-                        avatar: "http://photocdn.sohu.com/20080818/Img258957504.jpg",
-                        pedigreeId: 0, //种族
-                        pedigree: "帕索菲诺", //种族
-                        pedigreeCharacterIds: [], //特性列表
-                        pedigreeCharacterName: ["小巧灵活"], //特性名称
-                        skillIds: [], //技巧列表
-                        skillName: [], //技巧名称
-                        curCourage: 0,
-                        curSportAbility: 0,
-                        curAccurateAbility: 0,
-                        curSpeedAbility: 0,
-                        curCooperateAbility: 0,
-                    },
-
-
                 ]
             }
         },
@@ -340,11 +322,11 @@
                             getRandomInt(3)], //特性名称
                         skillIds: [], //技巧列表
                         skillName: [], //技巧名称
-                        curCourage: getRandomInt(100),
-                        curSportAbility: getRandomInt(100),
-                        curAccurateAbility: getRandomInt(100),
-                        curSpeedAbility: getRandomInt(100),
-                        curCooperateAbility: getRandomInt(100),
+                        curCourage: getRandomFromRange(80,120),
+                        curSportAbility: getRandomFromRange(80,120),
+                        curAccurateAbility: getRandomFromRange(80,120),
+                        curSpeedAbility: getRandomFromRange(80,120),
+                        curCooperateAbility: getRandomFromRange(80,120),
                     }
                     this.findHorseDialog = this.initChance > 0
                     this.initChance --
