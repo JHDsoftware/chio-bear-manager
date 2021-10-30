@@ -19,7 +19,7 @@
                     <div class="d-flex justify-space-between">
                         <span style="width: 80%">Courage:
                         <v-progress-linear height="10"
-                                           :value="item.curCourage"></v-progress-linear></span>
+                                           :value="item.curCourage/2"></v-progress-linear></span>
                         <span><v-btn icon
                                      @click="updateHorse(i, 0)"><v-icon color="grey lighten-1">mdi-plus-circle
                             -outline</v-icon></v-btn></span>
@@ -28,28 +28,28 @@
                     <div class="d-flex justify-space-between">
                         <span style="width: 80%">Sport Skill:
                         <v-progress-linear height="10"
-                                           :value="item.curSportAbility"></v-progress-linear></span>
+                                           :value="item.curSportAbility/2"></v-progress-linear></span>
                         <span><v-btn icon @click="updateHorse(i, 1)"><v-icon color="grey lighten-1">mdi-plus-circle
                             -outline</v-icon></v-btn></span>
                     </div>
                     <div class="d-flex justify-space-between">
                         <span style="width: 80%">Accurate:
                         <v-progress-linear height="10"
-                                           :value="item.curAccurateAbility"></v-progress-linear></span>
+                                           :value="item.curAccurateAbility/2"></v-progress-linear></span>
                         <span><v-btn icon @click="updateHorse(i, 2)"><v-icon color="grey lighten-1">mdi-plus-circle
                             -outline</v-icon></v-btn></span>
                     </div>
                     <div class="d-flex justify-space-between">
                         <span style="width: 80%">Speed:
                         <v-progress-linear height="10"
-                                           :value="item.curSpeedAbility"></v-progress-linear></span>
+                                           :value="item.curSpeedAbility/2"></v-progress-linear></span>
                         <span><v-btn icon @click="updateHorse(i, 3)"><v-icon color="grey lighten-1">mdi-plus-circle
                             -outline</v-icon></v-btn></span>
                     </div>
                     <div class="d-flex justify-space-between">
                         <span style="width: 80%">Cooperation:
                         <v-progress-linear height="10"
-                                           :value="item.curCooperateAbility"></v-progress-linear></span>
+                                           :value="item.curCooperateAbility/2"></v-progress-linear></span>
                         <span><v-btn icon @click="updateHorse(i, 4)"><v-icon color="grey lighten-1">mdi-plus-circle
                             -outline</v-icon></v-btn></span>
                     </div>

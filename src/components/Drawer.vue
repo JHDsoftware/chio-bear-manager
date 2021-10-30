@@ -22,7 +22,7 @@
                     icon: 'mdi-horse-variant-fast',
                     title: 'Horses',
                     name: 'Horses',
-                    to: '/Horses',
+                    to: '/',
                     brief: true,
                 },
                 {

@@ -146,6 +146,8 @@ const BASIC_SPORT_ABILITY_CONSUMPTION = 15
 const BASIC_COURAGE_CONSUMPTION = 10
 export let Check = 0
 
+// eslint-disable-next-line no-unused-vars
+export const broadcastCheckAndPerformance = function (check, performance, greatPerf) {}
 
 const barrierCheck = async function (h, score, probCallback, effectCallback) {
     h.check = "-"
@@ -360,4 +362,4 @@ export const blockLoop = async function (horse, block, loopCount, score) {
     })
 
     return beforeResult
-};
+}

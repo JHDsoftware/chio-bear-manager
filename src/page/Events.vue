@@ -30,6 +30,7 @@
                         outlined
                         rounded
                         text
+                        @click="beginGame"
                 >
                     Begin Now!
                 </v-btn>
@@ -119,7 +120,18 @@
 
 <script>
 export default {
-  name: "Events"
+  name: "Events",
+
+    methods: {
+      beginGame() {
+          this.$router.push({
+              path: '/GameRender',
+              query: {
+                  data: this.horse
+              }
+          })
+      }
+    }
 }
 </script>
 
