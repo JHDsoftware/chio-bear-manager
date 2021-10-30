@@ -1,142 +1,43 @@
 <template>
-  <!--  <v-container>-->
-  <!--    <v-app-bar-->
-  <!--        app-->
-  <!--        dark-->
-  <!--        color="blue">-->
-  <!--      <v-app-bar-nav-icon></v-app-bar-nav-icon>-->
-  <!--      <v-toolbar-title>-->
-  <!--        <span class="font-weight-bold">-->
-  <!--          {{ horse.name }} : CA{{horse.id}}</span>-->
-  <!--      </v-toolbar-title>-->
-  <!--      <v-spacer></v-spacer>-->
-  <!--      <span class="">CHIO Aachen CAMPUS</span>-->
-  <!--    </v-app-bar>-->
+  <v-container class="pa-2">
+    <v-app-bar flat app>
+      <v-app-bar-nav-icon @click="$router.back()">
+        <v-icon>
+          mdi-arrow-left
+        </v-icon>
+      </v-app-bar-nav-icon>
+      <h1>Horse Detail</h1></v-app-bar>
 
-  <div>
-    <v-container>
-
-      <v-img src="https://www.chioaachen.de/wp-content/uploads/2021/06/MicrosoftTeams-image-1-1.jpg"
-             height="180px">
-      </v-img>
-
-      <div class="d-flex justify-space-between" style="margin-top: 10px">
-        <v-card-actions class="font-weight-bold">History</v-card-actions>
-        <!--        <v-btn @click="show=!show" icon>-->
-        <!--          <v-icon >{{ show ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>-->
-        <!--        </v-btn>-->
-      </div>
-
-      <v-expand-transition>
-        <div v-show="show">
-          <v-img :src="horse.avatar">
-            <v-card style="opacity: 0.9; height: 100%">
-              <v-divider></v-divider>
-
-              <div style="margin-left: 48px; margin-top: 20px; width: 150px">
-
-                <div><span >Name:</span> {{horse.pedigree}}</div>
-                <span> </span>
-                <div>ID: {{horse.pedigreeId}}</div>
-              </div>
-
-              <div style="margin-top: 20px;" class="align-center">
-
-                <span style="margin-left: 48px; width: 150px">Courage:</span>
-                <div style="margin-left:48px; width: 80%">
-                  <v-progress-linear
-                      style="margin-right: 10px"
-                      height="10px"
-                      color="yellow"
-                      v-model="horse.curCourage"/>
-                </div>
-
-                <span style="margin-left: 48px; width: 150px">AccurateAbility:</span>
-                <div style="margin-left:48px; width: 80%">
-                  <v-progress-linear
-                      style="margin-right: 10px"
-                      height="10px"
-                      color="yellow"
-                      v-model="horse.curAccurateAbility"/>
-                </div>
-
-
-                <span style="margin-left: 48px; width: 150px">SpeedAbility:</span>
-                <div style="margin-left:48px; width: 80%">
-                  <v-progress-linear
-                      style="margin-right: 10px"
-                      height="10px"
-                      color="blue"
-                      v-model="horse.curSpeedAbility"/>
-                </div>
-
-
-                <span style="margin-left: 48px; width: 150px">SportAbility:</span>
-                <div style="margin-left:48px; width: 80%">
-                  <v-progress-linear
-                      style="margin-right: 10px"
-                      height="10px"
-                      color="red"
-                      v-model="horse.curSportAbility"/>
-                </div>
-
-
-                <span style="margin-left: 48px; width: 150px">CooperateAbility:</span>
-                <div style="margin-left:48px; width: 80%">
-                  <v-progress-linear
-                      style="margin-right: 10px"
-                      height="10px"
-                      color="green"
-                      v-model="horse.curCooperateAbility"/>
-                </div>
-
-              </div>
-
-
-              <v-card-text>
-                <div class="font-weight-bold ml-8 mb-2">
-                  {{ horse.name }}'History
-                </div>
-
-                <v-timeline
-                    align-top
-                    dense>
-                  <v-timeline-item
-                      v-for="(item,index) in historyList"
-                      :key='"his"+ index'
-                      small
-                  >
-                    <div>
-                      <div><strong>{{ item.historyTime }}</strong></div>
-                      <div>{{ item.historyDesc }}</div>
-                    </div>
-                  </v-timeline-item>
-                </v-timeline>
-              </v-card-text>
-            </v-card>
-          </v-img>
+    <div class="pa-2"
+    >
+      <horse-card :horse="horse"></horse-card>
+    </div>
+    <div class="font-weight-bold mb-2">
+      {{ horse.name }}'History
+    </div>
+    <v-timeline
+        align-top
+        dense>
+      <v-timeline-item
+          v-for="(item,index) in historyList"
+          :key='"his"+ index'
+          small
+      >
+        <div>
+          <div><strong>{{ item.historyTime }}</strong></div>
+          <div>{{ item.historyDesc }}</div>
         </div>
-
-      </v-expand-transition>
-
-
-      <!--      <v-list>-->
-      <!--        <v-list-item>-->
-      <!--          <v-list-item-content >Horse Name: {{horse.name}}</v-list-item-content>-->
-      <!--          <v-list-item-content>Horse ID: {{horse.ID}}</v-list-item-content>-->
-      <!--        </v-list-item>-->
-      <!--      </v-list>-->
-
-    </v-container>
-
-
-  </div>
-  <!--  </v-container>-->
+      </v-timeline-item>
+    </v-timeline>
+  </v-container>
 </template>
 
 <script>
+import HorseCard from "@/components/HorseCard";
+
 export default {
   name: "HorseDetail.vue",
+  components: {HorseCard},
   data() {
     return {
       show: true,

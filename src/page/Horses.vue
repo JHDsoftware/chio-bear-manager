@@ -1,13 +1,7 @@
 <template>
     <v-container>
-      <v-carousel height="250">
-        <v-carousel-item
-                v-for="(item,i) in items"
-                :key="i"
-                :src="item.src"
-        ></v-carousel-item>
-      </v-carousel>
-
+      <h1>My Horses</h1>
+      <v-divider></v-divider>
       <div v-if= "horsesList.length > 0" class="mt-4" style="display: grid;
         grid-gap: 10px" >
         <template v-for="(horse,index) in horsesList" >

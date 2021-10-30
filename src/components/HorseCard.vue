@@ -2,15 +2,19 @@
   <v-card
       class="d-flex justify-space-between"
       elevation="0" @click="seeDetail">
-    <div>
-      <h1>{{ horse.name }}</h1>
-      <div>
-        Level:20
-        <v-progress-linear color="warning" value="25" striped height="20"></v-progress-linear>
+    <div class="flex-grow-1">
+      <h1>{{ horse.name.replace(horse.name[0],horse.name[0].toUpperCase()) }}</h1>
+
+      <div class="font-weight-bold">
+        Level:{{getRandomInt(10)}}
+        <v-progress-linear color="warning" :value="getRandomInt(100)" striped height="10"></v-progress-linear>
       </div>
-      {{ horse.pedigree }}
-      <v-list-item-subtitle>{{ horse.pedigreeCharacterName }}</v-list-item-subtitle>
-    </div>
+      <v-chip outlined class="mt-2" label small color="error">{{ horse.pedigree }}</v-chip>
+      <div class="mt-2">
+        <v-list-item-subtitle>{{ horse.pedigreeCharacterName }}</v-list-item-subtitle>
+      </div>
+
+      </div>
     <div class="pa-2 pr-4">
       <h3>Status</h3>
       <horse-stat style="width: 144px" :horse-model="horse"></horse-stat>
@@ -21,9 +25,10 @@
 
 <script>
 import HorseStat from "@/components/HorseStat";
+import {getRandomInt} from "@/modules/randomUtils";
 
 export default {
-  name: "HorseDetail.vue",
+  name: "HorseCard",
   components: {HorseStat},
   comments: {},
   data() {
@@ -56,7 +61,7 @@ export default {
     // }
   },
   methods: {
-
+getRandomInt,
     seeDetail() {
       this.$router.push({
         path: '/horseDetail',
