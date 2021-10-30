@@ -166,8 +166,6 @@ import {
 } from "@/modules/moduleIndex";
 import {randomBlockIndexList} from "@/modules/spreadBlock";
 import HorseStat from "@/components/HorseStat";
-import {myHorseList} from "../modules/moduleIndex";
-
 
 export default {
   name: "GameRender",
@@ -176,10 +174,13 @@ export default {
     return {
       mapSizeX: 12,
       horse: Object.assign({}, Horse, {
-        curCourage: myHorseList[0].curCourage, curSportAbility: myHorseList[0].curSportAbility, name: "Amy",
-        curCooperateAbility: myHorseList[0].curCooperateAbility, curAccurateAbility: myHorseList[0].curAccurateAbility,
-        curSpeedAbility: myHorseList[0].curSpeedAbility,
-        inGameCourage: 100, inGameSportAbility: 100, check: "-", perform: "-"
+        curCourage: 56, curSportAbility:89, name: "Amy",
+        curCooperateAbility:54,
+        curAccurateAbility: 89,
+        curSpeedAbility: 54,
+        inGameCourage: 100,
+        inGameSportAbility: 100,
+        check: "-", perform: "-"
       }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",

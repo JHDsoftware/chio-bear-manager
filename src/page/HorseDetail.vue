@@ -6,6 +6,7 @@
           mdi-arrow-left
         </v-icon>
       </v-app-bar-nav-icon>
+      <
       <h1>Horse Detail</h1></v-app-bar>
 
     <div class="pa-2"
