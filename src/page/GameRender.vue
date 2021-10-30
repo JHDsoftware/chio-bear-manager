@@ -64,7 +64,6 @@
         <div class="pa-2">
           <template>
             <h2>{{ horse.name }}</h2>
-            <p>{{ horse.pedigreeCharacterName }}</p>
             <div>Stima
               <v-progress-linear color="warning" height="20"
                                  :buffer-value="horseStima"
@@ -75,6 +74,7 @@
                                  :buffer-value="horseCourage"
                                  stream></v-progress-linear>
             </div>
+
           </template>
           <v-btn @click="()=>gameIsStart=false"
                  block class="mt-2"
@@ -90,14 +90,7 @@
               <h1>{{ score }}</h1>
             </div>
           </v-card>
-          <v-card class="pa-2">
-            <div class="">
-              <span class="caption">Bariers</span>
-            </div>
-            <div style="width: 100%;text-align: right">
-              <h1>0/{{ totalBlocks }}</h1>
-            </div>
-          </v-card>
+         <horse-stat :horse-model="horse"></horse-stat>
         </div>
       </div>
     </template>
@@ -159,15 +152,18 @@
 import {getRandomInt} from "@/modules/randomUtils";
 import {shuffle} from "lodash-es";
 import {blockLoop, EmptyBlock, HealVertical, Horse, LargeVerticalBarrier, VerticalBarrier} from "@/modules/moduleIndex";
+import {randomBlockIndexList} from "@/modules/spreadBlock";
+import HorseStat from "@/components/HorseStat";
 
 export default {
   name: "GameRender",
+  components: {HorseStat},
   data: function () {
     return {
       mapSizeX: 12,
       horse: Object.assign({}, Horse, {
-        curCourage: 100, curSportAbility: 100, name: "Amy",
-        curCooperateAbility: 100, curAccurateAbility: 100, curSpeed: 100,
+        curCourage: 100, curSportAbility: 56, name: "Amy",
+        curCooperateAbility: 78, curAccurateAbility: 43, curSpeedAbility: 25,
         inGameCourage: 100, inGameSportAbility: 100,
       }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
@@ -345,7 +341,6 @@ export default {
           break;
 
       }
-      this.speedMod *= 1.05
       if (!this.shouldEndGame()) {
         setTimeout(this.gameLoop, 700 / (this.speed * this.speedMod))
       } else {
@@ -366,20 +361,11 @@ export default {
       this.path = []
       this.mapInfo = {}
     }
+    const map = randomBlockIndexList(this.path.length, 3)
     this.path.forEach((d, i) => {
-      if (i < 5) {
-        d.block = EmptyBlock
-      } else {
-        if (getRandomInt(100) > 85) {
-          d.block = VerticalBarrier
-        } else if (getRandomInt(100) > 95) {
-          d.block = LargeVerticalBarrier
-        } else if (getRandomInt(100) > 95) {
-          d.block = HealVertical
-        } else {
-          d.block = EmptyBlock
-        }
-      }
+      const blocks = [EmptyBlock, VerticalBarrier, LargeVerticalBarrier, HealVertical]
+      const id = map[i]
+      d.block = blocks[id]
     })
     console.log(this.path)
 

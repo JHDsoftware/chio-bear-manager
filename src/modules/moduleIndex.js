@@ -136,8 +136,8 @@ export const EmptyBlock = cNew(Block, {
         return LoopResult.SUCCESS
     },
     afterPass: function (h) {
-        h.inGameCourage += 5
-        h.inGameSportAbility += 5
+        h.inGameCourage += 3
+        h.inGameSportAbility += 3
     },
 })
 
@@ -188,13 +188,13 @@ export const VerticalBarrier = cNew(Block, {
                 success: () => {
                 },
                 greatSuccess: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(6,
                         h => h.curSpeedAbility *= 1.2,
                         h => h.curSpeedAbility /= 1.2,
                     ).applyToHorse(h)
                 },
                 failed: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(6,
                         h => h.curSpeedAbility *= 0.8,
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
@@ -202,7 +202,7 @@ export const VerticalBarrier = cNew(Block, {
                     h.curScore -= 1
                 },
                 greatFailed: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(6,
                         h => h.curSpeedAbility *= 0.8,
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
@@ -233,13 +233,13 @@ export const LargeVerticalBarrier = cNew(Block, {
                 success: () => {
                 },
                 greatSuccess: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(8,
                         h => h.curSpeedAbility *= 1.2,
                         h => h.curSpeedAbility /= 1.2,
                     ).applyToHorse(h)
                 },
                 failed: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(8,
                         h => h.curSpeedAbility *= 0.8,
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)
@@ -247,7 +247,7 @@ export const LargeVerticalBarrier = cNew(Block, {
                     h.curScore -= 1
                 },
                 greatFailed: h => {
-                    PropertySimpleBuff(2,
+                    PropertySimpleBuff(8,
                         h => h.curSpeedAbility *= 0.8,
                         h => h.curSpeedAbility /= 0.8,
                     ).applyToHorse(h)

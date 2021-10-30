@@ -142,8 +142,6 @@
                                         Cooperation:
                                         <v-progress-linear height="10"
                                                            :value="horseModel.curCooperateAbility*10"></v-progress-linear>
-
-
                                     </div>
                                 </v-list-item-content>
                             </v-list-item>
