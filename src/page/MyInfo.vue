@@ -75,7 +75,7 @@
                     <v-card @click="findHorse()">
                         <v-img
                                 height="400px"
-                                src="https://lh3.googleusercontent.com/proxy/I4HHlzq6oPz09_UkiZdxUPDXvZg9B2Iv3NQVBWN1ORclS2UK1tW6mMInWYPKqBhiq91LHGZJdKOji3ABr8ZgjarJLbsVAq6JIu_LmYrmrGby9TKx"
+                                src="../assets/caoyuan.jpeg"
                         >
                             <v-chip class="text-overline mt-4 ml-4" color="black" dark>
                                 My Opportunity: {{initChance}}
