@@ -4,7 +4,7 @@
       <v-divider></v-divider>
       <div class="pa-2">
         <v-card
-            class="mx-auto mb-4"
+            class="mx-auto mb-4" @click="beginGame"
         >
           <v-list-item three-line>
             <v-list-item-content>
