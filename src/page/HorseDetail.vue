@@ -6,8 +6,8 @@
           mdi-arrow-left
         </v-icon>
       </v-app-bar-nav-icon>
-      <
-      <h1>Horse Detail</h1></v-app-bar>
+      <v-app-bar-title>Horse Detail</v-app-bar-title>
+    </v-app-bar>
 
     <div class="pa-2"
     >
