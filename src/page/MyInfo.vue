@@ -3,7 +3,7 @@
     <v-row>
       <v-card width="1000" height="200px" color="black">
         <v-card-title class="white--text mt-8">
-          <v-avatar size="128">
+          <v-avatar size="88">
             <img
                 alt="user"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVR3NzxK-lq23YxvqlEkC1BUHNJRp5qC-41w&usqp=CAU"
