@@ -11,13 +11,13 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        name: 'Home',
-        component: GameRender
+        name: 'Horses',
+        component: Horses
     },
     {
-        name: 'Horses',
-        path: '/Horses',
-        component: Horses,
+        name: 'GameRender',
+        path: '/GameRender',
+        component: GameRender,
     },
     {
         name: 'Events',
