@@ -148,11 +148,17 @@ export let Check = 0
 
 
 const barrierCheck = async function (h, score, probCallback, effectCallback) {
+    h.check = "-"
+    h.perform = "-"
     const prob = probCallback(h)
-    h.check = prob
+    h.check = prob.toFixed(2)
+    await new Promise(r => setTimeout(r, 500));
     const performance = localGetRandomInt(100)
-    h.perform = performance
+    await new Promise(r => setTimeout(r, 500));
+    h.perform = parseInt(100 - performance)
+    await new Promise(r => setTimeout(r, 500));
     const great = localGetRandomInt(100)
+
 
 
     const greatPerf = great < 20 ? 1 : 0
@@ -176,15 +182,32 @@ const barrierCheck = async function (h, score, probCallback, effectCallback) {
 
     h.inGameSportAbility -= BASIC_SPORT_ABILITY_CONSUMPTION
     h.inGameCourage -= BASIC_COURAGE_CONSUMPTION
-
+    let checkResultString = ""
+    switch (checkResult) {
+        case LoopResult.SUCCESS:
+            checkResultString = "Success!"
+            break;
+        case LoopResult.GREAT_SUCCESS:
+            checkResultString = "Huge Success!"
+            break;
+        case LoopResult.FAILED:
+            checkResultString = "Failed"
+            break;
+        case LoopResult.GREAT_FAILED:
+            checkResultString = "Big Failed!"
+            break;
+    }
+    h.perform = checkResultString
+    h.check = ""
+    await new Promise(r => setTimeout(r, 500));
     return checkResult
 }
 
 export const VerticalBarrier = cNew(Block, {
     id: 11,
     name: "vertical",
-    beforePass: function (horse, block, loopCount, score) {
-        return barrierCheck(horse, score,
+    beforePass: async function (horse, block, loopCount, score) {
+        return await barrierCheck(horse, score,
             h => 0.5 * (
                 h.curCourage +
                 h.curSportAbility +
@@ -228,8 +251,8 @@ export const VerticalBarrier = cNew(Block, {
 export const LargeVerticalBarrier = cNew(Block, {
     id: 12,
     name: "large vertical",
-    beforePass: function (horse, block, loopCount, score) {
-        return barrierCheck(horse, score,
+    beforePass: async function (horse, block, loopCount, score) {
+        return await barrierCheck(horse, score,
             h => 0.5 * (
                 h.curCourage +
                 h.curSportAbility +
@@ -273,8 +296,8 @@ export const LargeVerticalBarrier = cNew(Block, {
 export const HealVertical = cNew(Block, {
     id: 13,
     name: "heal vertical",
-    beforePass: function (horse, block, loopCount, score) {
-        return barrierCheck(horse, score,
+    beforePass: async function (horse, block, loopCount, score) {
+        return await barrierCheck(horse, score,
             h => 0.5 * (
                 h.curCourage +
                 h.curAccurateAbility
@@ -308,7 +331,7 @@ export const HealVertical = cNew(Block, {
     }
 })
 
-export const blockLoop = function (horse, block, loopCount, score) {
+export const blockLoop = async function (horse, block, loopCount, score) {
     gameBeforeBlockEvent.callbacks.forEach(it => {
         it && it(horse, block, loopCount)
     })
@@ -325,7 +348,7 @@ export const blockLoop = function (horse, block, loopCount, score) {
 
     let beforeResult = LoopResult.SUCCESS
     if (block.beforePass) {
-        beforeResult = block.beforePass(horse, block, loopCount, score)
+        beforeResult = await block.beforePass(horse, block, loopCount, score)
 
         if (beforeResult < 8) {
             block.afterPass && block.afterPass(horse, block, loopCount, score);

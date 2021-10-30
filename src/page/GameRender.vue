@@ -90,10 +90,10 @@
           </v-card>
           <v-card class="pa-2">
             <div class="">
-              <span class="caption">SCORE</span>
+              <span class="caption">Perform./Req.</span>
             </div>
             <div style="width: 100%;text-align: right">
-              <h1>{{ Perform + '/' + Check }}</h1>
+              <h1>{{ perform + '/' + check }}</h1>
             </div>
           </v-card>
         </div>
@@ -158,11 +158,10 @@ import {getRandomInt} from "@/modules/randomUtils";
 import {shuffle} from "lodash-es";
 import {
   blockLoop,
-  Check,
   EmptyBlock,
   HealVertical,
   Horse,
-  LargeVerticalBarrier, Perform,
+  LargeVerticalBarrier,
   VerticalBarrier
 } from "@/modules/moduleIndex";
 import {randomBlockIndexList} from "@/modules/spreadBlock";
@@ -178,7 +177,7 @@ export default {
       horse: Object.assign({}, Horse, {
         curCourage: 100, curSportAbility: 56, name: "Amy",
         curCooperateAbility: 78, curAccurateAbility: 43, curSpeedAbility: 25,
-        inGameCourage: 100, inGameSportAbility: 100, check: 0, perform: 0
+        inGameCourage: 100, inGameSportAbility: 100, check: "-", perform: "-"
       }),
       horseList: ["Aaden", "Rabbit", "Amy", ""],
       flatText: "He move fast, goes through the flat land!.",
@@ -187,8 +186,7 @@ export default {
       speedMod: 1,
       gameIsStart: false,
       path: [],
-      mapInfo: {},
-      Check, Perform
+      mapInfo: {}
     };
   },
   computed: {
@@ -341,9 +339,9 @@ export default {
           || this.horseCourage <= 0 ||
           this.horseStima <= 0 || !this.gameIsStart
     },
-    gameLoop() {
+    async gameLoop() {
       const currentSlot = this.path[this.currentManIndex]
-      const res = blockLoop(this.horse, currentSlot.block, this.currentManIndex)
+      const res = await blockLoop(this.horse, currentSlot.block, this.currentManIndex)
       switch (res) {
         case 2:
         case 4:
