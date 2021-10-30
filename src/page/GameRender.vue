@@ -345,9 +345,9 @@ export default {
           break;
 
       }
-      this.speedMod *= 1.1
+      this.speedMod *= 1.05
       if (!this.shouldEndGame()) {
-        setTimeout(this.gameLoop, 1000 / (this.speed * this.speedMod))
+        setTimeout(this.gameLoop, 700 / (this.speed * this.speedMod))
       } else {
         this.gameIsStart = false
         this.flatText = "He is ending the game"
